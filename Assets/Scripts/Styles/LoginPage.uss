@@ -1,0 +1,29 @@
+* {
+	margin: 5px;
+}
+
+:root {
+	align-items: center;
+	justify-content: center;
+	-unity-font-style: bold;
+}
+
+TextField {
+	width: 80%;
+	color: black;
+}
+
+.container {
+	align-items: center;
+	justify-content: space-between;
+	border-radius: 12px;
+	border-color: white;
+	border-width: 2px;
+	padding: 10px;
+	padding-left: 30px;
+	width: 50%;
+}
+
+.welcome {
+	font-size: 24px;
+}

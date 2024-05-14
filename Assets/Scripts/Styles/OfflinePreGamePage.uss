@@ -1,0 +1,21 @@
+:root {
+	align-items: center;
+	justify-content: center;
+}
+
+DropdownField {
+	width: 80%;
+	margin: 15px;
+	color: black;
+}
+
+.main {
+	border-color: white;
+	border-radius: 12px;
+	border-width: 2px;
+	width: 80%;
+	height: 80%;
+	padding: 10px;
+	align-items: center;
+	justify-content: space-around;
+}
