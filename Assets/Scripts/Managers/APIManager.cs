@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -130,7 +131,12 @@ public class APIManager : MonoBehaviour {
         }
     }
 
-    public void TryPostSessionData(string json) {
+    public void TryPostSessionData(SessionDataModel sessionData) {
+        var json = JsonConvert.SerializeObject(
+            sessionData,
+            Formatting.Indented,
+            new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
+
         StartCoroutine(SendSessionData(json));
     }
 

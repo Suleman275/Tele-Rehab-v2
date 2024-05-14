@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftHand: {fileID: 3946358245045588055}
   rightHand: {fileID: 8833288147139273220}
-  sensitivity: 1
+  sensitivity: 2
 --- !u!1 &3946358245045588055
 GameObject:
   m_ObjectHideFlags: 0
@@ -61,6 +61,7 @@ GameObject:
   - component: {fileID: 2071577519896113647}
   - component: {fileID: 8579164276424237808}
   - component: {fileID: 2045782157323359906}
+  - component: {fileID: 6866842026985329376}
   m_Layer: 0
   m_Name: Left_Hand
   m_TagString: Untagged
@@ -183,6 +184,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasBall: 0
+--- !u!114 &6866842026985329376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3946358245045588055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e9ed57115a5bc140a1d90e3fc6ca362, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectId: 
+  objectName: 
 --- !u!1 &8833288147139273220
 GameObject:
   m_ObjectHideFlags: 0
@@ -195,6 +210,7 @@ GameObject:
   - component: {fileID: 6524422617617733914}
   - component: {fileID: 2515799857848340115}
   - component: {fileID: 3797646030847431860}
+  - component: {fileID: 2200154936633999468}
   m_Layer: 0
   m_Name: Right_Hand
   m_TagString: Untagged
@@ -317,3 +333,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasBall: 0
+--- !u!114 &2200154936633999468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8833288147139273220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e9ed57115a5bc140a1d90e3fc6ca362, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectId: 
+  objectName: 

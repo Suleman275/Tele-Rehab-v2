@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,8 +21,6 @@ public class OfflineGameManager : MonoBehaviour {
 
     private GameObject player;
 
-    //add session start and end times
-
     public Action<int, int> OnBallCompleted;
     public Action OnGameCompleted;
 
@@ -30,12 +29,14 @@ public class OfflineGameManager : MonoBehaviour {
     }
 
     public void StartGame(string handChoice, int totalNumberOfBalls, int wallHeight) {
+        DataRecorder.Instance.objsToTrack.Clear(); // doing manually for now
+
         this.totalNumberOfBalls = totalNumberOfBalls;
         this.wallHeight = wallHeight;
         this.handChoice = handChoice;
 
         gameEnv.SetActive(true);
-        ballSpawner.SpawnBalls(handChoice, totalNumberOfBalls);
+        var spawnedBalls = ballSpawner.SpawnBalls(handChoice, totalNumberOfBalls);
         middleWall.SetWallHeight(wallHeight);
 
         if (handChoice == "Left") {
@@ -45,7 +46,20 @@ public class OfflineGameManager : MonoBehaviour {
             leftTrigger.SetActive(true);
         }
 
-        player = Instantiate(playerPrefab);
+        foreach (var ball in spawnedBalls) {
+            DataRecorder.Instance.AddObjectToTrack(ball);
+        }
+
+        if (player == null) {
+            player = Instantiate(playerPrefab);
+        }
+
+        var playerController = player.GetComponent<Offline_Player>();
+
+        DataRecorder.Instance.AddObjectToTrack(playerController.leftHand);
+        DataRecorder.Instance.AddObjectToTrack(playerController.rightHand);
+
+        DataRecorder.Instance.StartReccording();
     }
 
     public void BallCompleted() {
@@ -53,6 +67,10 @@ public class OfflineGameManager : MonoBehaviour {
 
         if (numCompletedBalls == totalNumberOfBalls) {
             OnGameCompleted?.Invoke();
+
+            DataRecorder.Instance.StopReccording();
+
+            SaveSessionData();
         }
         else {
             OnBallCompleted?.Invoke(numCompletedBalls, totalNumberOfBalls);
@@ -61,6 +79,7 @@ public class OfflineGameManager : MonoBehaviour {
 
     public void StopGame() {
         Destroy(player);
+        player = null;
 
         if (handChoice == "Left") {
             rightTrigger.SetActive(false);
@@ -77,6 +96,22 @@ public class OfflineGameManager : MonoBehaviour {
     public void RestartGame() {
         numCompletedBalls = 0;
 
-        ballSpawner.SpawnBalls(handChoice, totalNumberOfBalls); //can clear children before game restart
+        StartGame(handChoice, totalNumberOfBalls, wallHeight); //can clear balls before game restart
+    }
+
+    private void SaveSessionData() {
+        var sessionData = new SessionDataModel(
+            Guid.NewGuid().ToString(),
+            DataRecorder.Instance.sessionStartTime,
+            DataRecorder.Instance.sessionEndTime, 
+            UserDataManager.Instance.userEmail,
+            "",
+            "Offline",
+            handChoice,
+            wallHeight,
+            DataRecorder.Instance.data,
+            DataRecorder.Instance.skeletonData);
+
+        APIManager.Instance.TryPostSessionData(sessionData);
     }
 }

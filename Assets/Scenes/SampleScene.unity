@@ -731,6 +731,9 @@ GameObject:
   - component: {fileID: 971038830}
   - component: {fileID: 971038831}
   - component: {fileID: 971038832}
+  - component: {fileID: 971038833}
+  - component: {fileID: 971038834}
+  - component: {fileID: 971038835}
   m_Layer: 0
   m_Name: Managers_Custom
   m_TagString: Untagged
@@ -795,6 +798,49 @@ MonoBehaviour:
   leftTrigger: {fileID: 188176984}
   rightTrigger: {fileID: 835240081}
   playerPrefab: {fileID: 3195802084428230606, guid: 0f50b3ee8787d3c4094eabfcf385b0ec, type: 3}
+--- !u!114 &971038833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 971038828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42661f135168ea344a5400c537d01c02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeSinceApplicationStart: 0
+--- !u!114 &971038834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 971038828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb00778b67e5e5b4d9d3b81fc6e7191d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objsToTrack: []
+  sessionStartTime: 0
+  sessionEndTime: 0
+--- !u!114 &971038835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 971038828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 234d909bdaad918469836171892e8237, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  userEmail: 
+  userRole: 
+  userId: 
 --- !u!1 &1011620525
 GameObject:
   m_ObjectHideFlags: 0
