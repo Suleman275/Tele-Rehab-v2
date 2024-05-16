@@ -9,6 +9,14 @@ public class PatientDashboard : MiniPage {
         var practiceBtn = CreateAndAddElement<Button>("btn");
         practiceBtn.text = "Practice";
         practiceBtn.clicked += PracticeBtn_clicked;
+
+        var scheduleBtn = CreateAndAddElement<Button>("btn");
+        scheduleBtn.text = "Schedule a meeting";
+        scheduleBtn.clicked += ScheduleBtn_clicked;
+    }
+
+    private void ScheduleBtn_clicked() {
+        _router.Navigate(this, "ScheduleAppointmentPage");
     }
 
     private void PracticeBtn_clicked() {

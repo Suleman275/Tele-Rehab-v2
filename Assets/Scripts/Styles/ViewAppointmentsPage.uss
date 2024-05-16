@@ -1,0 +1,36 @@
+:root {
+	align-items: center;
+	justify-content: center;
+}
+
+.container {
+	border-color: white;
+	border-radius: 12px;
+	border-width: 2px;
+	width: 80%;
+	height: 80%;
+}
+
+DropdownField {
+	width: 30%;
+}
+
+.top {
+	flex-direction: row;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	align-items: center;
+	justify-content: space-between;
+}
+
+AppointmentRow {
+	flex-direction: row;
+	width: 100%;
+	background-color: rgba(255, 255, 255, 0.5);
+	align-items: center;
+	justify-content: space-between;
+}
+
+AppointmentRow:hover {
+	color: black;
+}
