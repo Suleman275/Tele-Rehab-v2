@@ -1,7 +1,6 @@
 using MiniUI;
+using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -77,17 +76,11 @@ public class ViewAppointmentsPage : MiniPage {
     }
 
     private void RenderAppointmentsList(List<AppointmentDataModel> appointments) {
-        print($"rendering {appointments.Count} items");
+        midSection.Clear();
         foreach (AppointmentDataModel appointment in appointments) {
-            //AppointmentRow row;
-            //if (appointment.requestSenderRole == "Patient") {
-            //    row = new AppointmentRow(appointment._id, appointment.requestSender, appointment.appointmentWith, appointment.time, appointment.status);
-            //}
-            //else {
-            //    row = new AppointmentRow(appointment._id, appointment.appointmentWith, appointment.requestSender, appointment.time, appointment.status);
-            //}
-
-            AppointmentRow row = new AppointmentRow(appointment);
+            AppointmentRow row = new AppointmentRow(appointment, () => {
+                _router.NavigateWithData(this, "AppointmentDetailsPage", appointment);
+            });
 
             midSection.Add(row);
         }
@@ -101,25 +94,7 @@ class AppointmentRow : VisualElement {
     Label time;
     Label status;
 
-    public AppointmentRow(string id, string patient, string doctor, string time, string status) { // this could have just taken appointment data model instead...
-        this.id = new Label(id);
-        this.patientName = new Label(patient);
-        this.doctorName = new Label(doctor);
-        this.time = new Label(time);
-        this.status = new Label(status);
-
-        this.Add(this.id);
-        this.Add(this.patientName);
-        this.Add(this.doctorName);
-        this.Add(this.time);
-        this.Add(this.status);
-
-        this.RegisterCallback<ClickEvent>((evt) => {
-            Debug.Log($"{id} was clicked");
-        });
-    }
-
-    public AppointmentRow(AppointmentDataModel appointmentData) { // this could have just taken appointment data model instead...
+    public AppointmentRow(AppointmentDataModel appointmentData, Action onClickCallback) {
         this.id = new Label(appointmentData._id);
         this.time = new Label(appointmentData.time);
         this.status = new Label(appointmentData.status);
@@ -140,7 +115,7 @@ class AppointmentRow : VisualElement {
         this.Add(this.status);
 
         this.RegisterCallback<ClickEvent>((evt) => {
-            Debug.Log($"{id} was clicked");
+            onClickCallback();
         });
     }
 }

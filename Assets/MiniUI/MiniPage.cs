@@ -10,6 +10,8 @@ namespace MiniUI {
         protected VisualElement _root;
         protected MiniComponentRouter _router;
 
+        public System.Object _recievedData = new System.Object();
+
         private void OnEnable() {
             _uiDocument = GetComponent<UIDocument>();
             _root = _uiDocument.rootVisualElement;
