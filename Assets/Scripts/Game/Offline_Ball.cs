@@ -19,8 +19,7 @@ public class Offline_Ball : MonoBehaviour {
                 holdingHand = hand;
             }
             else if (other.gameObject.TryGetComponent<MiddleWall>(out MiddleWall wall) && holdingHand != null) { //if in hand and collides with wall
-                holdingHand.hasBall = false;
-                holdingHand = null;
+                DropBall();
             }
         }
     }
@@ -32,6 +31,15 @@ public class Offline_Ball : MonoBehaviour {
             holdingHand = null;
 
             OfflineGameManager.Instance.BallCompleted();
+        }
+    }
+
+    private void DropBall() {
+        if (holdingHand != null) {
+            holdingHand.hasBall = false;
+            holdingHand = null;
+
+            OfflineGameManager.Instance.BallDropped();
         }
     }
 }

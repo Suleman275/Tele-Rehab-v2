@@ -33,6 +33,7 @@ public class ViewAppointmentsPage : MiniPage {
         filtersDD.choices.Add("Accepted");
         filtersDD.choices.Add("Rejected");
         filtersDD.choices.Add("Pending");
+        filtersDD.choices.Add("Cancelled");
 
         filtersDD.RegisterValueChangedCallback((e) => {
             errorText.text = string.Empty;

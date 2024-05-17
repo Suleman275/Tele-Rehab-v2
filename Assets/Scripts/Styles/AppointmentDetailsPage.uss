@@ -1,0 +1,29 @@
+:root {
+	align-items: center;
+	justify-content: center;
+}
+
+.container {
+	border-color: white;
+	border-radius: 12px;
+	border-width: 2px;
+	width: 80%;
+	height: 80%;
+}
+
+.top {
+	flex-direction: row;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	align-items: center;
+	justify-content: center;
+}
+
+.top Label {
+	font-size: 36px;
+}
+
+.middle {
+	align-items: center;
+	justify-content: space-around;
+}

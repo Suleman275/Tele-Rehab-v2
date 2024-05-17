@@ -22,6 +22,9 @@ public class APIManager : MonoBehaviour {
 
     public Action<List<AppointmentDataModel>> OnAllAppointmentsWithStatusRecieved;
     public Action<string> OnGetAllAppointmentsWithStatusError;
+    
+    public Action OnAppointmentUpdated;
+    public Action<string> OnAppointmentUpdateError;
 
     private void Awake() {
         Instance = this;
@@ -131,7 +134,6 @@ public class APIManager : MonoBehaviour {
         }
     }
 
-
     public void TryGetAllAppointments() {
         StartCoroutine(SendGetAllAppointmentsRequest());
     }
@@ -143,7 +145,7 @@ public class APIManager : MonoBehaviour {
             yield return request.SendWebRequest();
 
             if (request.result == UnityWebRequest.Result.Success) {
-                print("all appointments received");
+                //print("all appointments received");
                 string responseJson = request.downloadHandler.text;
 
                 var appointments = JsonConvert.DeserializeObject<List<AppointmentDataModel>>(responseJson);
@@ -168,7 +170,7 @@ public class APIManager : MonoBehaviour {
             yield return request.SendWebRequest();
 
             if (request.result == UnityWebRequest.Result.Success) {
-                print($"all appointments with status: {status} received");
+                //print($"all appointments with status: {status} received");
                 string responseJson = request.downloadHandler.text;
 
                 var appointments = JsonConvert.DeserializeObject<List<AppointmentDataModel>>(responseJson);
@@ -178,6 +180,43 @@ public class APIManager : MonoBehaviour {
             else {
                 Debug.LogError("Error getting data: " + request.error);
                 OnGetAllAppointmentsWithStatusError?.Invoke(request.error);
+            }
+        }
+    }
+
+    public void TryUpdateAppointmentData(AppointmentDataModel updatedAppointmentData) {
+        StartCoroutine(SendUpdateAppointmentDataRequest(updatedAppointmentData));
+    }
+
+    private IEnumerator SendUpdateAppointmentDataRequest(AppointmentDataModel updatedAppointmentData) {
+        string url = $"{baseUrl}/appointments/{updatedAppointmentData._id}";
+
+        string json = JsonConvert.SerializeObject(updatedAppointmentData);
+
+        using (UnityWebRequest request = UnityWebRequest.Post(url, json, "application/json")) {
+            print("sending web request");
+            yield return request.SendWebRequest();
+
+            print("sent web request with result:" + request.result);
+
+            if (request.result == UnityWebRequest.Result.Success) {
+                string responseJson = request.downloadHandler.text;
+
+                print("recieved response: " + responseJson);
+
+                if (responseJson == "Appointment not found") {
+                    print("appointment not found error");
+                    OnAppointmentUpdateError?.Invoke(responseJson);
+                }
+                else {
+                    //invoke success event
+                    print("appointment updated");
+                    OnAppointmentUpdated?.Invoke();
+                }
+            }
+            else {
+                Debug.LogError("Error posting data in: " + request.error);
+                OnAppointmentUpdateError?.Invoke(request.error);
             }
         }
     }

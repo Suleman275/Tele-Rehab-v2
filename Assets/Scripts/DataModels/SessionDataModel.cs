@@ -11,10 +11,11 @@ public class SessionDataModel {
     public string sessionType;
     public string exerciseType;
     public int wallHeight;
+    public int ballDroppedCount;
     public Dictionary<string, List<DataPoint>> data;
     public Dictionary<float, Astra.Joint[]> skeletonData;
 
-    public SessionDataModel(string _id, float sessionStartTime, float sessionEndTime, string patientName, string doctorName, string sessionType, string exerciseType, int wallHeight, Dictionary<string, List<DataPoint>> data, Dictionary<float, Astra.Joint[]> skeletonData) {
+    public SessionDataModel(string _id, float sessionStartTime, float sessionEndTime, string patientName, string doctorName, string sessionType, string exerciseType, int wallHeight, int ballDroppedCount, Dictionary<string, List<DataPoint>> data, Dictionary<float, Astra.Joint[]> skeletonData) {
         this._id = _id;
         this.sessionStartTime = sessionStartTime;
         this.sessionEndTime = sessionEndTime;
@@ -23,6 +24,7 @@ public class SessionDataModel {
         this.sessionType = sessionType;
         this.exerciseType = exerciseType;
         this.wallHeight = wallHeight;
+        this.ballDroppedCount = ballDroppedCount;
         this.data = data;
         this.skeletonData = skeletonData;
     }

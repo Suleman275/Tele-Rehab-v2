@@ -43,6 +43,11 @@ namespace MiniUI {
 
         }
 
+        protected void ReRenderPage() {
+            _root.Clear();
+            RenderPage();
+        }
+
         protected T CreateAndAddElement<T>() where T : VisualElement, new() {
             T element = new T();
 

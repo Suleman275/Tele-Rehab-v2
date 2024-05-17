@@ -16,6 +16,7 @@ public class OfflineGameManager : MonoBehaviour {
 
     private int totalNumberOfBalls;
     private int numCompletedBalls;
+    private int ballDroppedCount;
     private int wallHeight;
     private string handChoice;
 
@@ -77,6 +78,10 @@ public class OfflineGameManager : MonoBehaviour {
         }
     }
 
+    public void BallDropped() {
+        ballDroppedCount++;
+    }
+
     public void StopGame() {
         Destroy(player);
         player = null;
@@ -95,6 +100,7 @@ public class OfflineGameManager : MonoBehaviour {
 
     public void RestartGame() {
         numCompletedBalls = 0;
+        ballDroppedCount = 0;
 
         StartGame(handChoice, totalNumberOfBalls, wallHeight); //can clear balls before game restart
     }
@@ -109,6 +115,7 @@ public class OfflineGameManager : MonoBehaviour {
             "Offline",
             handChoice,
             wallHeight,
+            ballDroppedCount,
             DataRecorder.Instance.data,
             DataRecorder.Instance.skeletonData);
 
