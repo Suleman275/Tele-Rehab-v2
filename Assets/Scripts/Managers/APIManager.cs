@@ -26,6 +26,9 @@ public class APIManager : MonoBehaviour {
     public Action OnAppointmentUpdated;
     public Action<string> OnAppointmentUpdateError;
 
+    public Action<RoomDataModel> OnRoomDataRecieved;
+    public Action<string> OnGetRoomError;
+
     private void Awake() {
         Instance = this;
     }
@@ -285,6 +288,66 @@ public class APIManager : MonoBehaviour {
             }
             else {
                 Debug.LogError("Error getting data: " + request.error);
+            }
+        }
+    }
+
+    //public void TryUpdateRoom(RoomDataModel updatedRoomData) {
+    //    SendUpdateRoomRequest(updatedRoomData);
+    //}
+
+    //IEnumerator SendUpdateRoomRequest(RoomDataModel roomData) {
+    //    string url = $"{baseUrl}/rooms/{roomData._id}";
+
+    //    string json = JsonConvert.SerializeObject(roomData);
+
+    //    using (UnityWebRequest request = UnityWebRequest.Post(url, json, "application/json")) {
+    //        yield return request.SendWebRequest();
+
+    //        if (request.result == UnityWebRequest.Result.Success) {
+    //            string responseJson = request.downloadHandler.text;
+
+    //            print(responseJson);
+
+    //            var room = JsonConvert.DeserializeObject<RoomDataModel>(responseJson);
+
+    //            OnRoomUpdated?.Invoke(room);
+    //        }
+    //        else {
+    //            Debug.LogError("Error posting data in: " + request.error);
+
+    //            OnRoomUpdateError?.Invoke(request.error);
+    //        }
+    //    }
+    //}
+
+    //public void TryGetRoom(RoomDataModel room) {
+    //    StartCoroutine(SendGetRoomRequest(room._id));
+    //}
+
+    public void TryGetRoom(string roomId) {
+        StartCoroutine(SendGetRoomRequest(roomId));
+    }
+
+    IEnumerator SendGetRoomRequest(string roomId) {
+        string url = $"{baseUrl}/rooms/{roomId}";
+
+        using (UnityWebRequest request = UnityWebRequest.Get(url)) {
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success) {
+                string responseJson = request.downloadHandler.text;
+
+                var room = JsonConvert.DeserializeObject<RoomDataModel>(responseJson);
+
+                print("room data recieved");
+
+                OnRoomDataRecieved?.Invoke(room);
+            }
+            else {
+                Debug.LogError("Web request error: " + request.error);
+
+                OnGetRoomError?.Invoke(request.error);
             }
         }
     }

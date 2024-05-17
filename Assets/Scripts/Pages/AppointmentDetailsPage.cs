@@ -8,7 +8,7 @@ public class AppointmentDetailsPage : MiniPage {
 
     Label errorText;
 
-    AppointmentDataModel data;
+    AppointmentDataModel appointmentData;
     protected override void RenderPage() {
         InheritStylesFromComponentRouter();
 
@@ -16,7 +16,7 @@ public class AppointmentDetailsPage : MiniPage {
 
         SetupEvents();
 
-        data = (AppointmentDataModel)_recievedData;
+        appointmentData = (AppointmentDataModel)_recievedData;
 
         errorText = CreateAndAddElement<Label>("errorText");
 
@@ -29,11 +29,11 @@ public class AppointmentDetailsPage : MiniPage {
 
         var midSection = container.CreateAndAddElement<MiniElement>("middle");
 
-        midSection.CreateAndAddElement<Label>().text = "Date/Time: " + data.time;
-        midSection.CreateAndAddElement<Label>().text = "Patient Name: " + data.requestSenderRole == "Patient"? data.requestSender : data.appointmentWith;
-        midSection.CreateAndAddElement<Label>().text = "Appointment Status: " + data.status;
+        midSection.CreateAndAddElement<Label>().text = "Date/Time: " + appointmentData.time;
+        midSection.CreateAndAddElement<Label>().text = "Patient Name: " + appointmentData.getPatientName();
+        midSection.CreateAndAddElement<Label>().text = "Appointment Status: " + appointmentData.status;
 
-        if (data.status == "Pending") {
+        if (appointmentData.status == "Pending") {
             var acceptBtn = container.CreateAndAddElement<Button>("btn");
             acceptBtn.text = "Accept Appointment Request";
             acceptBtn.clicked += () => { 
@@ -46,10 +46,13 @@ public class AppointmentDetailsPage : MiniPage {
                 UpdateAppointmentStatus("Rejected");
             };
         }
-        else if (data.status == "Accepted") {
+        else if (appointmentData.status == "Accepted") {
             var startBtn = container.CreateAndAddElement<Button>("btn");
             startBtn.text = "Start this session";
-            startBtn.clicked += () => { };
+            startBtn.clicked += () => {
+                //print("room id: " + data.roomId);
+                print("will implement");
+            };
 
             var cancelBtn = container.CreateAndAddElement<Button>("btn");
             cancelBtn.text = "Cancel this appointment";
@@ -67,17 +70,17 @@ public class AppointmentDetailsPage : MiniPage {
 
     private void UpdateAppointmentStatus(string status) {
         print("trying to update appointment status");
-        data.status = status;
-        APIManager.Instance.TryUpdateAppointmentData(data);
+        appointmentData.status = status;
+        APIManager.Instance.TryUpdateAppointmentData(appointmentData);
     }
 
     private void SetupEvents() {
         APIManager.Instance.OnAppointmentUpdateError += error => errorText.text = error;
 
         APIManager.Instance.OnAppointmentUpdated += () => {
-            _recievedData = data;
+            _recievedData = appointmentData;
             ReRenderPage();
-            errorText.text = "Your appointment information has been updated"; //should probably have a success text label instead
+            errorText.text = "Your appointment information has been updated";
         };
     }
 }

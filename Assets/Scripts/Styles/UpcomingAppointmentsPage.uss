@@ -11,16 +11,16 @@
 	height: 80%;
 }
 
-DropdownField {
-	width: 30%;
-}
-
 .top {
 	flex-direction: row;
 	width: 100%;
 	background-color: rgba(0, 0, 0, 0.5);
 	align-items: center;
-	justify-content: space-between;
+	justify-content: center;
+}
+
+.top Label {
+	font-size: 36px;
 }
 
 .middle {

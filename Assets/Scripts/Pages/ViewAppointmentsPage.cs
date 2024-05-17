@@ -1,5 +1,4 @@
 using MiniUI;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -78,6 +77,8 @@ public class ViewAppointmentsPage : MiniPage {
 
     private void RenderAppointmentsList(List<AppointmentDataModel> appointments) {
         midSection.Clear();
+        midSection.Add(new AppointmentRow()); // creating column headers
+
         foreach (AppointmentDataModel appointment in appointments) {
             AppointmentRow row = new AppointmentRow(appointment, () => {
                 _router.NavigateWithData(this, "AppointmentDetailsPage", appointment);
@@ -85,38 +86,5 @@ public class ViewAppointmentsPage : MiniPage {
 
             midSection.Add(row);
         }
-    }
-}
-
-class AppointmentRow : VisualElement {
-    Label id;
-    Label patientName;
-    Label doctorName;
-    Label time;
-    Label status;
-
-    public AppointmentRow(AppointmentDataModel appointmentData, Action onClickCallback) {
-        this.id = new Label(appointmentData._id);
-        this.time = new Label(appointmentData.time);
-        this.status = new Label(appointmentData.status);
-
-        if (appointmentData.requestSenderRole == "Patient") {
-            this.patientName = new Label(appointmentData.requestSender);
-            this.doctorName = new Label(appointmentData.appointmentWith);
-        }
-        else {
-            this.patientName = new Label(appointmentData.appointmentWith);
-            this.doctorName = new Label(appointmentData.requestSender);
-        }
-
-        this.Add(this.id);
-        this.Add(this.patientName);
-        this.Add(this.doctorName);
-        this.Add(this.time);
-        this.Add(this.status);
-
-        this.RegisterCallback<ClickEvent>((evt) => {
-            onClickCallback();
-        });
     }
 }
