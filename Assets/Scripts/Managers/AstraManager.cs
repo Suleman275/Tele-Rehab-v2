@@ -1,7 +1,4 @@
 using Astra;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class AstraManager : MonoBehaviour {
@@ -39,22 +36,6 @@ public class AstraManager : MonoBehaviour {
     public void StopBodyStream() {
         AstraSDKManager.Instance.IsBodyOn = false;
     }
-
-    //public Astra.Joint[] GetBodyJoints(int bodyIndex) {
-    //    if (AstraSDKManager.Instance.Initialized && AstraSDKManager.Instance.IsBodyOn) {
-    //        Body[] bodies = AstraSDKManager.Instance.Bodies;
-
-    //        if (bodies.Length > 0) {
-    //            Body body = bodies[bodyIndex];
-
-    //            if (body.Status == BodyStatus.Tracking) {
-    //                return body.Joints;
-    //            }
-    //        }
-    //    } 
-
-    //    return null;
-    //}
 
     public Body GetBody(int bodyIndex) {
         if (AstraSDKManager.Instance.Initialized && AstraSDKManager.Instance.IsBodyOn) {

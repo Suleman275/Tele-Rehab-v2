@@ -530,6 +530,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showPreview: 0
+  styles: {fileID: 7433441132597879392, guid: 0591aae2060e90347b7899edf6046fce, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

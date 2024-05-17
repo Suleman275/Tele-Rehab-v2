@@ -1,5 +1,4 @@
 using Astra;
-using Newtonsoft.Json;
 using UnityEngine;
 
 public class Offline_Player : MonoBehaviour {
@@ -10,7 +9,7 @@ public class Offline_Player : MonoBehaviour {
 
     private void Awake() {
         if (sensitivity == 0) {
-            sensitivity = 1;
+            sensitivity = 2;
         }
     }
 

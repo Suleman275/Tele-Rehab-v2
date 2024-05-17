@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Newtonsoft.Json;
 
 public class DataRecorder : MonoBehaviour {
     public static DataRecorder Instance;
@@ -43,11 +42,11 @@ public class DataRecorder : MonoBehaviour {
         print("Session recording ended at " + sessionEndTime);
     }
 
-    private void ResetData() {
-        foreach (var kvp in data) {
-            data[kvp.Key].Clear();
-        }
-    }
+    //private void ResetData() {
+    //    foreach (var kvp in data) {
+    //        data[kvp.Key].Clear();
+    //    }
+    //}
 
     private void InitDataStore() {
         data = new Dictionary<string, List<DataPoint>>();
@@ -57,14 +56,14 @@ public class DataRecorder : MonoBehaviour {
             string id = Guid.NewGuid().ToString();
             data.Add(id, new List<DataPoint>());
 
-            // Add the id to the GameObject for reference during import (optional)
+            // Add the id to the GameObject for reference during import
             SetGameObjectId(obj, id);
         }
     }
 
     private void SetGameObjectId(GameObject obj, string id) {
         //yield return new WaitForEndOfFrame(); // Wait for next frame to ensure components are initialized
-        obj.GetComponent<TrackableObject>().objectId = id; // Add the id to the GameObject name (optional)
+        obj.GetComponent<TrackableObject>().objectId = id; // Add the id to the GameObject name
         //print($"set {obj.name} id to {id}");
     }
 
@@ -100,22 +99,4 @@ public class DataRecorder : MonoBehaviour {
             }
         }
     }
-
-    //public string ExportDataToJson() { //only meant to be run on the server
-    //    var sessionData = new SessionDataModel(Guid.NewGuid().ToString(), sessionStartTime, sessionEndTime, UserDataManager.Instance.userEmail, UserDataManager.Instance.joinedDoctorName, data, TimeManager.Instance.currentTime.ToString("yyyy-MM-dd"));
-
-    //    var json = JsonConvert.SerializeObject(sessionData, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
-
-    //    return json;
-    //}
-
-    //public void ImportDataFromJson(string json) {
-    //    SessionDataModel importedData = JsonConvert.DeserializeObject<SessionDataModel>(json);
-
-    //    this.sessionEndTime = importedData.sessionEndTime;
-    //    this.sessionStartTime = importedData.sessionStartTime;
-    //    this.data = importedData.data;
-
-    //    print("data imported");
-    //}
 }
