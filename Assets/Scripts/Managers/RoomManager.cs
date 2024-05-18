@@ -24,7 +24,8 @@ public class RoomManager : MonoBehaviour {
     public Action OnDoctorJoined;
     public Action OnDoctorLeft;
 
-    public Action OnRelayCodeAdded;
+    public Action<string> OnRelayCodeAdded;
+    public Action<string> OnRelayCodeAddingError;
 
     public Action OnGameDataSet;
     public Action<string> OnSettingGameDataError;
@@ -37,6 +38,8 @@ public class RoomManager : MonoBehaviour {
 
     private void Start() {
         currentRoom = null;
+
+        UnityServicesManager.Instance.onHostStarted += TryAddRelayCode;
     }
 
     private void Update() {
@@ -56,12 +59,12 @@ public class RoomManager : MonoBehaviour {
     }
 
     public void TryJoinRoom(string roomId, string userRole) {
-        print("try join room");
+        //print("try join room");
         StartCoroutine(SendJoinRoomRequest(roomId, userRole));
     }
 
     IEnumerator SendJoinRoomRequest(string roomId, string userRole) {
-        print("send join room");
+        //print("send join room");
         string baseUrl = APIManager.Instance.baseUrl;
 
         //'/rooms/:id-:userRole-:userName-:reqType'
@@ -148,7 +151,7 @@ public class RoomManager : MonoBehaviour {
             if (request.result == UnityWebRequest.Result.Success) {
                 //print("updated room data received");
                 string responseJson = request.downloadHandler.text;
-                print(responseJson);
+                //print(responseJson);
 
                 var updatedRoomData = JsonConvert.DeserializeObject<RoomDataModel>(responseJson);
 
@@ -192,29 +195,53 @@ public class RoomManager : MonoBehaviour {
         }
     }
 
+    public void TryAddRelayCode(string relayCode) {
+        StartCoroutine(SendAddRelayCodeRequest(relayCode));
+    }
+
+    IEnumerator SendAddRelayCodeRequest(string relayCode) {
+        string url = $"{APIManager.Instance.baseUrl}/rooms/{currentRoom._id}/relay/{relayCode}";
+
+        using (UnityWebRequest request = UnityWebRequest.Post(url, "", "application/json")) {
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success) {
+                string responseJson = request.downloadHandler.text;
+                print(responseJson);
+
+                print("relay code added");
+            }
+            else {
+                Debug.LogError("Error getting data: " + request.error);
+
+                OnRelayCodeAddingError?.Invoke(request.error);
+            }
+        }
+    }
+
     private void ApplyChangesAndSendEvents(RoomDataModel updatedRoom) {
         if (!currentRoom.hasPatientJoined && updatedRoom.hasPatientJoined) {
             currentRoom = updatedRoom;
             OnPatientJoined?.Invoke();
         }
-        else if (currentRoom.hasPatientJoined && !updatedRoom.hasPatientJoined) {
+        if (currentRoom.hasPatientJoined && !updatedRoom.hasPatientJoined) {
             currentRoom = updatedRoom;
             OnPatientLeft?.Invoke();
         }
-        else if (!currentRoom.hasDoctorJoined && updatedRoom.hasDoctorJoined) {
+        if (!currentRoom.hasDoctorJoined && updatedRoom.hasDoctorJoined) {
             currentRoom = updatedRoom;
             OnDoctorJoined?.Invoke();
         }
-        else if (currentRoom.hasDoctorJoined && !updatedRoom.hasDoctorJoined) {
+        if (currentRoom.hasDoctorJoined && !updatedRoom.hasDoctorJoined) {
             currentRoom = updatedRoom;
             OnDoctorLeft?.Invoke();
         }
-        else if (currentRoom.relayCode == "" && updatedRoom.relayCode != "") {
+        if (currentRoom.relayCode == "" && updatedRoom.relayCode != "") {
             print("relay added");
             currentRoom = updatedRoom;
-            OnRelayCodeAdded?.Invoke();
+            OnRelayCodeAdded?.Invoke(currentRoom.relayCode);
         }
-        else if (!currentRoom.gameShouldStart && updatedRoom.gameShouldStart) {
+        if (!currentRoom.gameShouldStart && updatedRoom.gameShouldStart) {
             currentRoom = updatedRoom;
             OnGameShouldStart?.Invoke();
         }
