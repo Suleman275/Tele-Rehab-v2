@@ -62,12 +62,6 @@ public class ViewAppointmentsPage : MiniPage {
     }
 
     private void SetupEvents() {
-        APIManager.Instance.OnAllAppointmentsWithStatusRecieved += appointments => {
-            RenderAppointmentsList(appointments);
-        };
-
-        APIManager.Instance.OnGetAllAppointmentsWithStatusError += error => errorText.text = error;
-
         APIManager.Instance.OnAllAppointmentsRecieved += appointments => {
             RenderAppointmentsList(appointments);
         };

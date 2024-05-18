@@ -16,7 +16,7 @@ public class PatientDashboard : MiniPage {
 
         var upcomingAppointmentsBtn = CreateAndAddElement<Button>("btn");
         upcomingAppointmentsBtn.text = "View Upcoming Appointments";
-        upcomingAppointmentsBtn.clicked += UpcomingAppointmentsBtn_clicked; ;
+        upcomingAppointmentsBtn.clicked += UpcomingAppointmentsBtn_clicked;
     }
 
     private void UpcomingAppointmentsBtn_clicked() {

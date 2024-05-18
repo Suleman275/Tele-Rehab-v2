@@ -7,7 +7,7 @@ using UnityEngine.Networking; // Import the necessary namespace
 
 public class APIManager : MonoBehaviour {
     public static APIManager Instance;
-    private string baseUrl = "http://localhost:3000"; // Your Express API URL
+    public string baseUrl = "http://localhost:3000"; // Your Express API URL
     //private string baseUrl = "https://fc60-94-122-46-79.ngrok-free.app"; // Your Express API URL
     
     //Events
@@ -19,9 +19,6 @@ public class APIManager : MonoBehaviour {
 
     public Action<List<AppointmentDataModel>> OnAllAppointmentsRecieved;
     public Action<string> OnGetAllAppointmentsError;
-
-    public Action<List<AppointmentDataModel>> OnAllAppointmentsWithStatusRecieved;
-    public Action<string> OnGetAllAppointmentsWithStatusError;
     
     public Action OnAppointmentUpdated;
     public Action<string> OnAppointmentUpdateError;
@@ -162,12 +159,39 @@ public class APIManager : MonoBehaviour {
         }
     }
 
+    public void TryGetAllAppointmentsByParticipant(string participantName) {
+        StartCoroutine(SendGetAppointmentsByParticipantRequest(participantName));
+    }
+
+    IEnumerator SendGetAppointmentsByParticipantRequest(string participantName) {
+        string url = $"{baseUrl}/appointments/participant={participantName}/";
+
+        using (UnityWebRequest request = UnityWebRequest.Get(url)) {
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success) {
+                string jsonResponse = request.downloadHandler.text;
+                //Debug.Log("Appointments fetched successfully: " + jsonResponse);
+
+                var appointments = JsonConvert.DeserializeObject<List<AppointmentDataModel>>(jsonResponse);
+
+                OnAllAppointmentsRecieved?.Invoke(appointments);
+            }
+            else {
+                Debug.LogError("Error fetching appointments: " + request.responseCode);
+                Debug.LogError("Error fetching appointments: " + request.error);
+
+                OnGetAllAppointmentsError?.Invoke(request.error);
+            }
+        }
+    }
+
     public void TryGetAllAppointmentsWithStatus(string status) {
         StartCoroutine(SendGetAllAppointmentsWithStatusRequest(status));
     }
 
     private IEnumerator SendGetAllAppointmentsWithStatusRequest(string status) {
-        string url = $"{baseUrl}/appointments/{status}/";
+        string url = $"{baseUrl}/appointments/status={status}/";
 
         using (UnityWebRequest request = UnityWebRequest.Get(url)) {
             yield return request.SendWebRequest();
@@ -178,11 +202,11 @@ public class APIManager : MonoBehaviour {
 
                 var appointments = JsonConvert.DeserializeObject<List<AppointmentDataModel>>(responseJson);
 
-                OnAllAppointmentsWithStatusRecieved?.Invoke(appointments);
+                OnAllAppointmentsRecieved?.Invoke(appointments);
             }
             else {
                 Debug.LogError("Error getting data: " + request.error);
-                OnGetAllAppointmentsWithStatusError?.Invoke(request.error);
+                OnGetAllAppointmentsError?.Invoke(request.error);
             }
         }
     }
@@ -288,66 +312,6 @@ public class APIManager : MonoBehaviour {
             }
             else {
                 Debug.LogError("Error getting data: " + request.error);
-            }
-        }
-    }
-
-    //public void TryUpdateRoom(RoomDataModel updatedRoomData) {
-    //    SendUpdateRoomRequest(updatedRoomData);
-    //}
-
-    //IEnumerator SendUpdateRoomRequest(RoomDataModel roomData) {
-    //    string url = $"{baseUrl}/rooms/{roomData._id}";
-
-    //    string json = JsonConvert.SerializeObject(roomData);
-
-    //    using (UnityWebRequest request = UnityWebRequest.Post(url, json, "application/json")) {
-    //        yield return request.SendWebRequest();
-
-    //        if (request.result == UnityWebRequest.Result.Success) {
-    //            string responseJson = request.downloadHandler.text;
-
-    //            print(responseJson);
-
-    //            var room = JsonConvert.DeserializeObject<RoomDataModel>(responseJson);
-
-    //            OnRoomUpdated?.Invoke(room);
-    //        }
-    //        else {
-    //            Debug.LogError("Error posting data in: " + request.error);
-
-    //            OnRoomUpdateError?.Invoke(request.error);
-    //        }
-    //    }
-    //}
-
-    //public void TryGetRoom(RoomDataModel room) {
-    //    StartCoroutine(SendGetRoomRequest(room._id));
-    //}
-
-    public void TryGetRoom(string roomId) {
-        StartCoroutine(SendGetRoomRequest(roomId));
-    }
-
-    IEnumerator SendGetRoomRequest(string roomId) {
-        string url = $"{baseUrl}/rooms/{roomId}";
-
-        using (UnityWebRequest request = UnityWebRequest.Get(url)) {
-            yield return request.SendWebRequest();
-
-            if (request.result == UnityWebRequest.Result.Success) {
-                string responseJson = request.downloadHandler.text;
-
-                var room = JsonConvert.DeserializeObject<RoomDataModel>(responseJson);
-
-                print("room data recieved");
-
-                OnRoomDataRecieved?.Invoke(room);
-            }
-            else {
-                Debug.LogError("Web request error: " + request.error);
-
-                OnGetRoomError?.Invoke(request.error);
             }
         }
     }

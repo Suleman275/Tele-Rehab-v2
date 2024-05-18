@@ -33,38 +33,48 @@ public class AppointmentDetailsPage : MiniPage {
         midSection.CreateAndAddElement<Label>().text = "Patient Name: " + appointmentData.getPatientName();
         midSection.CreateAndAddElement<Label>().text = "Appointment Status: " + appointmentData.status;
 
-        if (appointmentData.status == "Pending") {
-            var acceptBtn = container.CreateAndAddElement<Button>("btn");
-            acceptBtn.text = "Accept Appointment Request";
-            acceptBtn.clicked += () => { 
-                UpdateAppointmentStatus("Accepted");
-            };
+        if (UserDataManager.Instance.userRole == "Doctor") {
+            if (appointmentData.status == "Pending") {
+                var acceptBtn = container.CreateAndAddElement<Button>("btn");
+                acceptBtn.text = "Accept Appointment Request";
+                acceptBtn.clicked += () => {
+                    UpdateAppointmentStatus("Accepted");
+                };
 
-            var rejectBtn = container.CreateAndAddElement<Button>("btn");
-            rejectBtn.text = "Reject Appointment Request";
-            rejectBtn.clicked += () => {
-                UpdateAppointmentStatus("Rejected");
-            };
-        }
-        else if (appointmentData.status == "Accepted") {
-            var startBtn = container.CreateAndAddElement<Button>("btn");
-            startBtn.text = "Start this session";
-            startBtn.clicked += () => {
-                //print("room id: " + data.roomId);
-                print("will implement");
-            };
+                var rejectBtn = container.CreateAndAddElement<Button>("btn");
+                rejectBtn.text = "Reject Appointment Request";
+                rejectBtn.clicked += () => {
+                    UpdateAppointmentStatus("Rejected");
+                };
+            }
+            else if (appointmentData.status == "Accepted") {
+                var startBtn = container.CreateAndAddElement<Button>("btn");
+                startBtn.text = "Start this session";
+                startBtn.clicked += () => {
+                    _router.NavigateWithData(this, "RoomDetailsPage", appointmentData.roomId);
+                };
 
-            var cancelBtn = container.CreateAndAddElement<Button>("btn");
-            cancelBtn.text = "Cancel this appointment";
-            cancelBtn.clicked += () => {
-                UpdateAppointmentStatus("Cancelled");
-            };
+                var cancelBtn = container.CreateAndAddElement<Button>("btn");
+                cancelBtn.text = "Cancel this appointment";
+                cancelBtn.clicked += () => {
+                    UpdateAppointmentStatus("Cancelled");
+                };
+            }
         }
+        else {
+            if (appointmentData.status == "Accepted") {
+                var startBtn = container.CreateAndAddElement<Button>("btn");
+                startBtn.text = "Start this session";
+                startBtn.clicked += () => {
+                    _router.NavigateWithData(this, "RoomDetailsPage", appointmentData.roomId);
+                };
+            }
+            }
 
         var backBtn = CreateAndAddElement<Button>();
-        backBtn.text = "Back to all appointments";
+        backBtn.text = "Back";
         backBtn.clicked += () => {
-            _router.Navigate(this, "ViewAppointmentsPage");
+            _router.Navigate(this, UserDataManager.Instance.userRole == "Patient" ? "PatientDashboard" : "DoctorDashboard");
         };
     }
 
