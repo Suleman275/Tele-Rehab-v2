@@ -53,7 +53,8 @@ public class ReplayManager : MonoBehaviour {
         isReplaying = true;
 
         timeValue = gameData.sessionStartTime - 1f;
-        print("Starting replay from " + timeValue);
+
+        OnReplayStarted?.Invoke();
     }
 
     public void PauseReplay() {
@@ -66,7 +67,6 @@ public class ReplayManager : MonoBehaviour {
 
     public void TogglePause() { 
         isPasued = !isPasued;
-        print("is paused: " + isPasued);
     }
 
     public void StopReplay() {
@@ -80,6 +80,8 @@ public class ReplayManager : MonoBehaviour {
         }
 
         trackedObjects.Clear();
+
+        OnReplayStopped?.Invoke();
     }
 
     public void Update() {
