@@ -18,6 +18,7 @@ public class OfflineGameManager : MonoBehaviour {
     private string handChoice;
 
     private GameObject player;
+    private Offline_Player playerController;
 
     public Action<int, int> OnBallCompleted;
     public Action OnGameCompleted;
@@ -52,7 +53,7 @@ public class OfflineGameManager : MonoBehaviour {
             player = Instantiate(playerPrefab);
         }
 
-        var playerController = player.GetComponent<Offline_Player>();
+        playerController = player.GetComponent<Offline_Player>();
 
         DataRecorder.Instance.AddObjectToTrack(playerController.leftHand);
         DataRecorder.Instance.AddObjectToTrack(playerController.rightHand);
@@ -80,6 +81,8 @@ public class OfflineGameManager : MonoBehaviour {
     }
 
     public void StopGame() {
+        DataRecorder.Instance.objsToTrack.Clear();
+
         Destroy(player);
         player = null;
 

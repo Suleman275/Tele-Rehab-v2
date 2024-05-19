@@ -65,6 +65,8 @@ public class OnlineGameManager : NetworkBehaviour {
             SetWallHeightClientRPC(roomData.wallHeight);
             SpawnBalls(roomData.exerciseType, roomData.ballCount);
             ActivateBallTriggersClientRpc(roomData.exerciseType);
+
+            DataRecorder.Instance.StartReccording();
         }
     }
 
@@ -89,6 +91,8 @@ public class OnlineGameManager : NetworkBehaviour {
     public void StopGame() {
         NetworkManager.Singleton.Shutdown();
 
+        DataRecorder.Instance.objsToTrack.Clear();
+
         if (roomData.exerciseType == "Left") {
             rightTrigger.SetActive(false);
         }
@@ -99,8 +103,7 @@ public class OnlineGameManager : NetworkBehaviour {
         wall.SetWallHeight(0);
 
         if (IsServer) {
-            foreach (var ball in spawnedBalls) {
-                DataRecorder.Instance.objsToTrack.Remove(ball);
+            foreach (var ball in spawnedBalls) { 
                 Destroy(ball);
             }
         }

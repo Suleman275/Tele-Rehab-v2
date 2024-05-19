@@ -33,6 +33,7 @@ public class DataRecorder : MonoBehaviour {
         timer = 0;
         sessionStartTime = TimeManager.Instance.timeSinceApplicationStart;
         print("Session recording started at " + sessionStartTime);
+        print($"recording {objsToTrack.Count} items");
     }
 
     public void StopReccording() {
@@ -40,6 +41,7 @@ public class DataRecorder : MonoBehaviour {
         timer = 0;
         sessionEndTime = TimeManager.Instance.timeSinceApplicationStart;
         print("Session recording ended at " + sessionEndTime);
+        print($"recorded {data.Count} items");
     }
 
     //private void ResetData() {

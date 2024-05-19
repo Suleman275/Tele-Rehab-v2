@@ -136,7 +136,7 @@ public class RoomDetailsPage : MiniPage {
 
         else if (currentUserRole == "Doctor") {
             RoomManager.Instance.OnPatientJoined += () => {
-                otherAttendeeLabel.text = RoomManager.Instance.currentRoom.doctorName + " is here";
+                otherAttendeeLabel.text = RoomManager.Instance.currentRoom.patientName + " is here";
             };
 
             RoomManager.Instance.OnPatientLeft += () => {
