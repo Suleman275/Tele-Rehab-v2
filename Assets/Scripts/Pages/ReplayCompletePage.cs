@@ -23,7 +23,7 @@ public class ReplayCompletePage : MiniPage {
     }
 
     private void ReplayBtn_clicked() {
-        enabled = false;
+        _router.Navigate(this, "ReplayUI");
         ReplayManager.Instance.StartReplay();
     }
 

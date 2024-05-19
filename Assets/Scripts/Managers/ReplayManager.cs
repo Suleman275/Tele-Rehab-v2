@@ -64,6 +64,10 @@ public class ReplayManager : MonoBehaviour {
         isPasued = false;
     }
 
+    public void TogglePause() { 
+        isPasued = !isPasued;
+        print("is paused: " + isPasued);
+    }
 
     public void StopReplay() {
         gameEnv.SetActive(false);

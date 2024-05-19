@@ -65,15 +65,11 @@ public class PastSessionsPage : MiniPage {
 
         APIManager.Instance.OnGetSessionSuccess += sessionData => {
             ReplayManager.Instance.SetSessionData(sessionData);
-            enabled = false;
+            _router.Navigate(this, "ReplayUI");
             ReplayManager.Instance.StartReplay();
         };
 
         APIManager.Instance.OnGetSessionsError += error => errorText.text = error;
         APIManager.Instance.OnGetSessionError += error => errorText.text = error;
-
-        ReplayManager.Instance.OnReplayFinished += () => {
-            _router.Navigate(this, "ReplayCompletePage");
-        };
     }
 }
