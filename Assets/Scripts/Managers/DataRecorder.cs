@@ -70,7 +70,7 @@ public class DataRecorder : MonoBehaviour {
     public void AddObjectToTrack(GameObject obj) {
         objsToTrack.Add(obj);
 
-        //print("tracking object: " + obj.name);
+        print("tracking object: " + obj.name);
     }
 
     private void Update() {

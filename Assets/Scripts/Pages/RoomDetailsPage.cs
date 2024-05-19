@@ -94,7 +94,7 @@ public class RoomDetailsPage : MiniPage {
 
     private void SetupEvents() {
         RoomManager.Instance.OnRoomJoined += roomData => {
-            print("joined room" + roomData._id);
+            //print("joined room" + roomData._id);
             
             if (currentUserRole == "Patient" && roomData.hasDoctorJoined) {
                 otherAttendeeLabel.text = roomData.doctorName + " is here";
@@ -128,9 +128,13 @@ public class RoomDetailsPage : MiniPage {
             RoomManager.Instance.OnGameShouldStart += () => {
                 errorText.text = "Starting game"; // add relay code
             };
+
+            UnityServicesManager.Instance.onHostStarted += (code) => {
+                _router.Navigate(this, "OfflineGameUI"); //might be wrong
+            };
         }
 
-        else {
+        else if (currentUserRole == "Doctor") {
             RoomManager.Instance.OnPatientJoined += () => {
                 otherAttendeeLabel.text = RoomManager.Instance.currentRoom.doctorName + " is here";
             };
@@ -145,6 +149,10 @@ public class RoomDetailsPage : MiniPage {
 
             RoomManager.Instance.OnGameDataSet += () => {
                 errorText.text = "Game Data Set";
+            };
+
+            UnityServicesManager.Instance.onClientStarted += () => {
+                _router.Navigate(this, "OfflineGameUI"); //might be wrong
             };
         }
     }

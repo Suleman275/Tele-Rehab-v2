@@ -18,9 +18,17 @@ public class OfflineGameUI : MiniPage {
         OfflineGameManager.Instance.OnBallCompleted += (numCompletedBalls, totalBalls) => {
             gameStateLabel.text = $"Balls Completed {numCompletedBalls} / {totalBalls}";
         };
+        
+        OnlineGameManager.Instance.OnBallCompleted += (numCompletedBalls, totalBalls) => {
+            gameStateLabel.text = $"Balls Completed {numCompletedBalls} / {totalBalls}";
+        };
 
         OfflineGameManager.Instance.OnGameCompleted += () => {
             _router.Navigate(this, "OfflineGameCompletePage");
+        };
+
+        OnlineGameManager.Instance.OnGameCompleted += () => {
+            _router.Navigate(this, "OnlineGameCompletePage");
         };
     }
 }

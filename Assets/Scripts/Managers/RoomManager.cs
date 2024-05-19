@@ -76,7 +76,7 @@ public class RoomManager : MonoBehaviour {
 
             if (request.result == UnityWebRequest.Result.Success) {
                 string responseJson = request.downloadHandler.text;
-                print(responseJson);
+                //print(responseJson);
 
                 if (responseJson == "Room not found") {
                     OnRoomJoinError?.Invoke("Room not found");

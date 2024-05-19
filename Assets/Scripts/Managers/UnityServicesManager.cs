@@ -42,14 +42,14 @@ public class UnityServicesManager : MonoBehaviour {
     }
 
     private async void InitServices() {
-//        var options = new InitializationOptions();
-//#if UNITY_EDITOR
-//        options.SetProfile(ClonesManager.IsClone() ? ClonesManager.GetArgument() : "Primary");
-//#endif
-//        await UnityServices.InitializeAsync(options);
-//        await AuthenticationService.Instance.SignInAnonymouslyAsync();
+        var options = new InitializationOptions();
+#if UNITY_EDITOR
+        options.SetProfile(ClonesManager.IsClone() ? ClonesManager.GetArgument() : "Primary");
+#endif
+        await UnityServices.InitializeAsync(options);
+        await AuthenticationService.Instance.SignInAnonymouslyAsync();
 
-        await UnityServices.InitializeAsync();
+        //await UnityServices.InitializeAsync();
 
         //await VivoxService.Instance.InitializeAsync();
     }
@@ -61,25 +61,25 @@ public class UnityServicesManager : MonoBehaviour {
             return;
         }
 
-        //if (!AuthenticationService.Instance.IsSignedIn) {
-        //    print("not signed into unity");
-        //    onHostStartingError?.Invoke("not signed into unity");
-        //    return;
-        //}
+        if (!AuthenticationService.Instance.IsSignedIn) {
+            print("not signed into unity");
+            onHostStartingError?.Invoke("not signed into unity");
+            return;
+        }
 
-        print("starting host");
+        //print("starting host");
 
         try {
-            print("creating allocation");
+            //print("creating allocation");
             Allocation a = await RelayService.Instance.CreateAllocationAsync(2);
-            print("Created allocation");
+            //print("Created allocation");
             var relayJoinCode = await RelayService.Instance.GetJoinCodeAsync(a.AllocationId);
-            print("got join code: " + relayJoinCode);
+            //print("got join code: " + relayJoinCode);
             transport.SetHostRelayData(a.RelayServer.IpV4, (ushort)a.RelayServer.Port, a.AllocationIdBytes, a.Key, a.ConnectionData);
-            print("set transport");
+            //print("set transport");
             NetworkManager.Singleton.StartHost();
 
-            print("host started");
+            //print("host started");
 
             onHostStarted?.Invoke(relayJoinCode);
         } 
@@ -95,7 +95,7 @@ public class UnityServicesManager : MonoBehaviour {
             return;
         }
 
-        print("starting client");
+        //print("starting client");
 
         try {
             JoinAllocation a = await RelayService.Instance.JoinAllocationAsync(joinCode);
