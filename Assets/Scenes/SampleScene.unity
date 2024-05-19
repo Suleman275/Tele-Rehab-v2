@@ -382,6 +382,8 @@ GameObject:
   - component: {fileID: 398326557}
   - component: {fileID: 398326558}
   - component: {fileID: 398326559}
+  - component: {fileID: 398326560}
+  - component: {fileID: 398326561}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -608,6 +610,33 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb470db2b27d68d459e37306cce82a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showPreview: 0
+--- !u!114 &398326560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 398326543}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef785fa69d8b4dd45a2526f8c75b594a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showPreview: 0
+  styles: {fileID: 7433441132597879392, guid: 0f1adbf4ea1904745a45e597e079f052, type: 3}
+--- !u!114 &398326561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 398326543}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f85d2b59cbbce6a41982836ad280f57f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   showPreview: 0
@@ -945,6 +974,7 @@ GameObject:
   - component: {fileID: 971038835}
   - component: {fileID: 971038836}
   - component: {fileID: 971038837}
+  - component: {fileID: 971038838}
   m_Layer: 0
   m_Name: Managers_Custom
   m_TagString: Untagged
@@ -1089,6 +1119,23 @@ MonoBehaviour:
     wallHeight: 0
     ballCount: 0
     exerciseType: 
+--- !u!114 &971038838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 971038828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 828258a02f895df4cb9eda2bcf1dab7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHandGhostPrefab: {fileID: 4634429520201198155, guid: 8b56aaf5d35627c4283fd4ccc780df6c, type: 3}
+  rightHandGhostPrefab: {fileID: 4634429520201198155, guid: 085f6865b454d0d4cbf69dc0a05853c4, type: 3}
+  ballPrefab: {fileID: 5868382731849197724, guid: bcb3dfb4fac52b149bbcab192e79492b, type: 3}
+  gameEnv: {fileID: 1456877066}
+  wall: {fileID: 1718800593}
 --- !u!1 &1011620525
 GameObject:
   m_ObjectHideFlags: 0

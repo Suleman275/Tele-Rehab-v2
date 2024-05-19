@@ -64,7 +64,7 @@ public class AppointmentDetailsPage : MiniPage {
         else {
             if (appointmentData.status == "Accepted") {
                 var startBtn = container.CreateAndAddElement<Button>("btn");
-                startBtn.text = "Start this session";
+                startBtn.text = "Join this session";
                 startBtn.clicked += () => {
                     _router.NavigateWithData(this, "RoomDetailsPage", appointmentData.roomId);
                 };

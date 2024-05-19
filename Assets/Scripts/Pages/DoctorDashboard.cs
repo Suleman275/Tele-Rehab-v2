@@ -16,6 +16,12 @@ public class DoctorDashboard : MiniPage {
         var upcomingAppointmentsBtn = CreateAndAddElement<Button>("btn");
         upcomingAppointmentsBtn.text = "View Upcoming Appointments";
         upcomingAppointmentsBtn.clicked += UpcomingAppointmentsBtn_clicked;
+
+        var pastSessionsBtn = CreateAndAddElement<Button>("btn");
+        pastSessionsBtn.text = "View Past Sessions";
+        pastSessionsBtn.clicked += () => {
+            _router.Navigate(this, "PastSessionsPage");
+        };
     }
 
     private void UpcomingAppointmentsBtn_clicked() {

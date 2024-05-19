@@ -88,7 +88,12 @@ public class RoomDetailsPage : MiniPage {
         btn.text = "Start Game";
         btn.clicked += () => {
             //TODO: handle for error checking
-            RoomManager.Instance.TrySetRoomData(int.Parse(wallDD.value), int.Parse(ballsDD.value), handDD.value);
+            if (RoomManager.Instance.currentRoom.hasPatientJoined) {
+                RoomManager.Instance.TrySetRoomData(int.Parse(wallDD.value), int.Parse(ballsDD.value), handDD.value);
+            }
+            else {
+                errorText.text = "Patient has not joined. Cannot start session";
+            }
         };
     }
 

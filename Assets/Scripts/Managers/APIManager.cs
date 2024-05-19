@@ -26,6 +26,12 @@ public class APIManager : MonoBehaviour {
     public Action<RoomDataModel> OnRoomDataRecieved;
     public Action<string> OnGetRoomError;
 
+    public Action<List<SessionDataModel>> OnGetSessionsSuccess;
+    public Action<string> OnGetSessionsError;
+    
+    public Action<SessionDataModel> OnGetSessionSuccess;
+    public Action<string> OnGetSessionError;
+
     private void Awake() {
         Instance = this;
     }
@@ -274,11 +280,11 @@ public class APIManager : MonoBehaviour {
         }
     }
 
-    public void TryGetPastSessions(Action<string> callback) {
-        StartCoroutine(SendPastSessionsGetRequest(callback));
+    public void TryGetPastSessions() {
+        StartCoroutine(SendPastSessionsGetRequest());
     }
 
-    IEnumerator SendPastSessionsGetRequest(Action<string> callback) {
+    IEnumerator SendPastSessionsGetRequest() {
         string url = $"{baseUrl}/sessions";
 
         using (UnityWebRequest request = UnityWebRequest.Get(url)) {
@@ -287,19 +293,22 @@ public class APIManager : MonoBehaviour {
             if (request.result == UnityWebRequest.Result.Success) {
                 string responseJson = request.downloadHandler.text;
 
-                callback(responseJson);
+                var sessions = JsonConvert.DeserializeObject<List<SessionDataModel>>(responseJson);
+
+                OnGetSessionsSuccess?.Invoke(sessions);
             }
             else {
                 Debug.LogError("Error getting data: " + request.error);
+                OnGetSessionsError?.Invoke(request.error);
             }
         }
     }
 
-    public void TryGetPastSession(string sessionId, Action<string> callback) {
-        StartCoroutine(SendGetSessionDataRequest(sessionId, callback));
+    public void TryGetPastSession(string sessionId) {
+        StartCoroutine(SendGetSessionDataRequest(sessionId));
     }
 
-    IEnumerator SendGetSessionDataRequest(string sessionId, Action<string> callback) {
+    IEnumerator SendGetSessionDataRequest(string sessionId) {
         string url = $"{baseUrl}/sessions/{sessionId}";
 
         using (UnityWebRequest request = UnityWebRequest.Get(url)) {
@@ -308,10 +317,14 @@ public class APIManager : MonoBehaviour {
             if (request.result == UnityWebRequest.Result.Success) {
                 string responseJson = request.downloadHandler.text;
 
-                callback(responseJson);
+                var session = JsonConvert.DeserializeObject<SessionDataModel>(responseJson);
+
+                OnGetSessionSuccess?.Invoke(session);
             }
             else {
                 Debug.LogError("Error getting data: " + request.error);
+
+                OnGetSessionError?.Invoke(request.error);
             }
         }
     }
