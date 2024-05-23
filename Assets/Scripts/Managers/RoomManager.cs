@@ -65,7 +65,7 @@ public class RoomManager : MonoBehaviour {
 
     IEnumerator SendJoinRoomRequest(string roomId, string userRole) {
         //print("send join room");
-        string baseUrl = APIManager.Instance.baseUrl;
+        string baseUrl = APIManager.Instance._baseUrl;
 
         //'/rooms/:id-:userRole-:userName-:reqType'
 
@@ -105,7 +105,7 @@ public class RoomManager : MonoBehaviour {
     }
 
     IEnumerator SendLeaveRoomRequest(string roomId, string userRole) {
-        string baseUrl = APIManager.Instance.baseUrl;
+        string baseUrl = APIManager.Instance._baseUrl;
 
         //'/rooms/:id-:userRole-:userName-:reqType'
 
@@ -143,7 +143,7 @@ public class RoomManager : MonoBehaviour {
 
     IEnumerator SendGetRoomRequest(string roomId) {
         //print($"Trying to get room");
-        string url = $"{APIManager.Instance.baseUrl}/rooms/{roomId}";
+        string url = $"{APIManager.Instance._baseUrl}/rooms/{roomId}";
 
         using (UnityWebRequest request = UnityWebRequest.Get(url)) {
             yield return request.SendWebRequest();
@@ -174,7 +174,7 @@ public class RoomManager : MonoBehaviour {
     }
 
     IEnumerator SendSetRoomDataRequest(RoomDataModel data) {
-        string url = $"{APIManager.Instance.baseUrl}/rooms/{data._id}/update";
+        string url = $"{APIManager.Instance._baseUrl}/rooms/{data._id}/update";
 
         string json = JsonConvert.SerializeObject(data);
 
@@ -200,7 +200,7 @@ public class RoomManager : MonoBehaviour {
     }
 
     IEnumerator SendAddRelayCodeRequest(string relayCode) {
-        string url = $"{APIManager.Instance.baseUrl}/rooms/{currentRoom._id}/relay/{relayCode}";
+        string url = $"{APIManager.Instance._baseUrl}/rooms/{currentRoom._id}/relay/{relayCode}";
 
         using (UnityWebRequest request = UnityWebRequest.Post(url, "", "application/json")) {
             yield return request.SendWebRequest();

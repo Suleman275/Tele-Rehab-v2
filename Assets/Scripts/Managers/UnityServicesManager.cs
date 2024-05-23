@@ -1,4 +1,4 @@
-using ParrelSync;
+//using ParrelSync;
 using System;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
@@ -42,14 +42,14 @@ public class UnityServicesManager : MonoBehaviour {
     }
 
     private async void InitServices() {
-        var options = new InitializationOptions();
-#if UNITY_EDITOR
-        options.SetProfile(ClonesManager.IsClone() ? ClonesManager.GetArgument() : "Primary");
-#endif
-        await UnityServices.InitializeAsync(options);
-        await AuthenticationService.Instance.SignInAnonymouslyAsync();
+//        var options = new InitializationOptions();
+//#if UNITY_EDITOR
+//        options.SetProfile(ClonesManager.IsClone() ? ClonesManager.GetArgument() : "Primary");
+//#endif
+//        await UnityServices.InitializeAsync(options);
 
-        //await UnityServices.InitializeAsync();
+        await UnityServices.InitializeAsync();
+        await AuthenticationService.Instance.SignInAnonymouslyAsync();
 
         //await VivoxService.Instance.InitializeAsync();
     }

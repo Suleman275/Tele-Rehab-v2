@@ -7,9 +7,9 @@ using UnityEngine.Networking; // Import the necessary namespace
 
 public class APIManager : MonoBehaviour {
     public static APIManager Instance;
-    public string baseUrl = "http://localhost:3000"; // Your Express API URL
-    //private string baseUrl = "https://fc60-94-122-46-79.ngrok-free.app"; // Your Express API URL
-    
+    public string _baseUrl = "https://096c-94-122-46-79.ngrok-free.app"; // Your Express API URL
+
+
     //Events
     public Action<UserDataModel> UserSignedIn;
     public Action<string> UserSignInFailed;
@@ -48,7 +48,7 @@ public class APIManager : MonoBehaviour {
     }
 
     private IEnumerator SendSignUpRequest(string json) {
-        string url = $"{baseUrl}/signup";
+        string url = $"{_baseUrl}/signup";
 
         using (UnityWebRequest request = UnityWebRequest.Post(url, json, "application/json")) {
             yield return request.SendWebRequest();
@@ -63,6 +63,7 @@ public class APIManager : MonoBehaviour {
     }
     
     public void TrySignIn(string email, string password) {
+        print("sending sign in" + _baseUrl);
         var jsonBody = new UserDataModel();
         jsonBody.email = email;
         jsonBody.password = password;
@@ -74,7 +75,7 @@ public class APIManager : MonoBehaviour {
     }
 
     private IEnumerator SendSignInRequest(string json) {
-        string url = $"{baseUrl}/signin";
+        string url = $"{_baseUrl}/signin";
 
         using (UnityWebRequest request = UnityWebRequest.Post(url, json, "application/json")) {
             yield return request.SendWebRequest();
@@ -113,7 +114,7 @@ public class APIManager : MonoBehaviour {
     }
 
     IEnumerator SendCreateAppointmentRequest(string jsonData) {
-        string url = $"{baseUrl}/appointments/";
+        string url = $"{_baseUrl}/appointments/";
 
         using (UnityWebRequest webRequest = UnityWebRequest.Post(url, jsonData, "application/json")) {
             yield return webRequest.SendWebRequest();
@@ -145,7 +146,7 @@ public class APIManager : MonoBehaviour {
     }
 
     private IEnumerator SendGetAllAppointmentsRequest() {
-        string url = $"{baseUrl}/appointments/";
+        string url = $"{_baseUrl}/appointments/";
 
         using (UnityWebRequest request = UnityWebRequest.Get(url)) {
             yield return request.SendWebRequest();
@@ -170,7 +171,7 @@ public class APIManager : MonoBehaviour {
     }
 
     IEnumerator SendGetAppointmentsByParticipantRequest(string participantName) {
-        string url = $"{baseUrl}/appointments/participant={participantName}/";
+        string url = $"{_baseUrl}/appointments/participant={participantName}/";
 
         using (UnityWebRequest request = UnityWebRequest.Get(url)) {
             yield return request.SendWebRequest();
@@ -197,7 +198,7 @@ public class APIManager : MonoBehaviour {
     }
 
     private IEnumerator SendGetAllAppointmentsWithStatusRequest(string status) {
-        string url = $"{baseUrl}/appointments/status={status}/";
+        string url = $"{_baseUrl}/appointments/status={status}/";
 
         using (UnityWebRequest request = UnityWebRequest.Get(url)) {
             yield return request.SendWebRequest();
@@ -222,7 +223,7 @@ public class APIManager : MonoBehaviour {
     }
 
     private IEnumerator SendUpdateAppointmentDataRequest(AppointmentDataModel updatedAppointmentData) {
-        string url = $"{baseUrl}/appointments/{updatedAppointmentData._id}";
+        string url = $"{_baseUrl}/appointments/{updatedAppointmentData._id}";
 
         string json = JsonConvert.SerializeObject(updatedAppointmentData);
 
@@ -264,7 +265,7 @@ public class APIManager : MonoBehaviour {
     }
 
     IEnumerator SendSessionData(string json) {
-        string url = $"{baseUrl}/sessions";
+        string url = $"{_baseUrl}/sessions";
 
         using (UnityWebRequest request = UnityWebRequest.Post(url, json, "application/json")) {
             yield return request.SendWebRequest();
@@ -285,7 +286,7 @@ public class APIManager : MonoBehaviour {
     }
 
     IEnumerator SendPastSessionsGetRequest() {
-        string url = $"{baseUrl}/sessions";
+        string url = $"{_baseUrl}/sessions";
 
         using (UnityWebRequest request = UnityWebRequest.Get(url)) {
             yield return request.SendWebRequest();
@@ -309,7 +310,7 @@ public class APIManager : MonoBehaviour {
     }
 
     IEnumerator SendGetSessionDataRequest(string sessionId) {
-        string url = $"{baseUrl}/sessions/{sessionId}";
+        string url = $"{_baseUrl}/sessions/{sessionId}";
 
         using (UnityWebRequest request = UnityWebRequest.Get(url)) {
             yield return request.SendWebRequest();
