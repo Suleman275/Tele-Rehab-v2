@@ -203,7 +203,8 @@ public class OnlineGameManager : NetworkBehaviour {
             roomData.wallHeight,
             ballDroppedCount,
             DataRecorder.Instance.data,
-            DataRecorder.Instance.skeletonData);
+            DataRecorder.Instance.skeletonData,
+            DataRecorder.Instance.emgData);
 
         APIManager.Instance.TryPostSessionData(sessionData);
     }

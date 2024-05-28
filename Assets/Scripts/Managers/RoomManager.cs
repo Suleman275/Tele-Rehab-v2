@@ -34,11 +34,11 @@ public class RoomManager : MonoBehaviour {
 
     private void Awake() {
         Instance = this;
+
+        currentRoom = null;
     }
 
     private void Start() {
-        currentRoom = null;
-
         UnityServicesManager.Instance.onHostStarted += TryAddRelayCode;
     }
 
@@ -47,7 +47,7 @@ public class RoomManager : MonoBehaviour {
     }
 
     private void HandleRoomPollForUpdates() {
-        if (currentRoom != null) {
+        if (currentRoom != null && currentRoom._id != null) {
             roomPollTimer -= Time.deltaTime;
 
             if (roomPollTimer < 0) {

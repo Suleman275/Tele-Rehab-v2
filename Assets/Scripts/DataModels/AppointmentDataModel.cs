@@ -6,7 +6,7 @@ public class AppointmentDataModel {
     public string requestSender;
     public string requestSenderRole;
     public string appointmentWith;
-    public string time;
+    public DateTime time;
     public string status;
     public string roomId;
 

@@ -96,6 +96,10 @@ public class OfflineGameManager : MonoBehaviour {
         middleWall.SetWallHeight(0);
         ballSpawner.ClearChildren();
         gameEnv.SetActive(false);
+
+#if ENABLE_WINMD_SUPPORT
+    EMGManager.Instance.DisconnectEMG();
+#endif
     }
 
     public void RestartGame() {
@@ -117,7 +121,8 @@ public class OfflineGameManager : MonoBehaviour {
             wallHeight,
             ballDroppedCount,
             DataRecorder.Instance.data,
-            DataRecorder.Instance.skeletonData);
+            DataRecorder.Instance.skeletonData,
+            DataRecorder.Instance.emgData);
 
         APIManager.Instance.TryPostSessionData(sessionData);
     }

@@ -7,7 +7,10 @@ using UnityEngine.Networking; // Import the necessary namespace
 
 public class APIManager : MonoBehaviour {
     public static APIManager Instance;
-    public string _baseUrl = "https://096c-94-122-46-79.ngrok-free.app"; // Your Express API URL
+    //public string _baseUrl = "https://dcac-94-122-35-221.ngrok-free.app"; // Your Express API URL
+    //public string _baseUrl = "localhost:3000"; // Your Express API URL
+    public string _baseUrl = ""; // Your Express API URL
+
 
 
     //Events
@@ -105,7 +108,7 @@ public class APIManager : MonoBehaviour {
             requestSender = UserDataManager.Instance.userEmail,
             requestSenderRole = UserDataManager.Instance.userRole,
             appointmentWith = name,
-            time = time,
+            //time = time,
             status = "Pending"
         };
 
@@ -186,6 +189,37 @@ public class APIManager : MonoBehaviour {
             }
             else {
                 Debug.LogError("Error fetching appointments: " + request.responseCode);
+                Debug.LogError("Error fetching appointments: " + request.error);
+
+                OnGetAllAppointmentsError?.Invoke(request.error);
+            }
+        }
+    }
+
+    public void TryGetUpcomingAppointments(string participantName) {
+        StartCoroutine(SendGetUpcomingAppointmentsRequest(participantName));
+    }
+
+    IEnumerator SendGetUpcomingAppointmentsRequest(string participantName) {
+        string url = $"{_baseUrl}/appointments/participant={participantName}/upcoming";
+
+        using (UnityWebRequest request = UnityWebRequest.Get(url)) {
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success) {
+                string jsonResponse = request.downloadHandler.text;
+                //Debug.Log("Appointments fetched successfully: " + jsonResponse);
+
+                if (jsonResponse == "No upcoming appointments") {
+                    OnGetAllAppointmentsError?.Invoke("No upcoming appointments");
+                }
+                else {
+                    var appointments = JsonConvert.DeserializeObject<List<AppointmentDataModel>>(jsonResponse);
+
+                    OnAllAppointmentsRecieved?.Invoke(appointments);
+                }
+            }
+            else { 
                 Debug.LogError("Error fetching appointments: " + request.error);
 
                 OnGetAllAppointmentsError?.Invoke(request.error);

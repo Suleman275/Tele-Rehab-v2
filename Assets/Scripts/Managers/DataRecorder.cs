@@ -11,6 +11,7 @@ public class DataRecorder : MonoBehaviour {
 
     public Dictionary<string, List<DataPoint>> data;
     public Dictionary<float, Astra.Joint[]> skeletonData;
+    public Dictionary<float, ushort> emgData;
 
     private float timer;
     private float recordFrequency;
@@ -53,6 +54,7 @@ public class DataRecorder : MonoBehaviour {
     private void InitDataStore() {
         data = new Dictionary<string, List<DataPoint>>();
         skeletonData = new Dictionary<float, Astra.Joint[]>();
+        emgData = new Dictionary<float, ushort>();
 
         foreach (var obj in objsToTrack) {
             string id = Guid.NewGuid().ToString();
@@ -95,6 +97,10 @@ public class DataRecorder : MonoBehaviour {
                     if (joints != null) {
                         skeletonData.Add(TimeManager.Instance.timeSinceApplicationStart, joints);
                     }
+                }
+
+                if (EMGManager.Instance.isEMGConnected) {
+                    emgData.Add(TimeManager.Instance.timeSinceApplicationStart, EMGManager.Instance.currentVal);
                 }
 
                 timer = 0;

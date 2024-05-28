@@ -11,7 +11,7 @@ class AppointmentRow : VisualElement {
 
     public AppointmentRow(AppointmentDataModel appointmentData, Action onClickCallback) {
         this.id = new Label(appointmentData._id);
-        this.time = new Label(appointmentData.time);
+        this.time = new Label(appointmentData.time.ToString());
         this.status = new Label(appointmentData.status);
 
         this.patientName = new Label(appointmentData.getPatientName());
@@ -53,7 +53,7 @@ class AppointmentRow : VisualElement {
             this.Add(this.status);
         }
         else {
-            this.time = new Label(appointmentData.time);
+            this.time = new Label(appointmentData.time.ToString());
             this.status = new Label(appointmentData.status);
 
             var patientName = appointmentData.getPatientName();

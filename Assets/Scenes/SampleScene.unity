@@ -479,6 +479,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showPreview: 0
+  styles: {fileID: 7433441132597879392, guid: 2eba22df28d76f5439cd38ecaa3bcaa6, type: 3}
 --- !u!114 &398326550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -532,6 +533,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showPreview: 0
+  styles: {fileID: 7433441132597879392, guid: 4ca23e6c3910d8147a2ab73eadf2bc0d, type: 3}
 --- !u!114 &398326554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -989,6 +991,7 @@ GameObject:
   - component: {fileID: 971038836}
   - component: {fileID: 971038837}
   - component: {fileID: 971038838}
+  - component: {fileID: 971038839}
   m_Layer: 0
   m_Name: Managers_Custom
   m_TagString: Untagged
@@ -1023,7 +1026,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 364917f4d9aad8142b412d6215ac0034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseUrl: http://localhost:3000
+  _baseUrl: localhost:3000
 --- !u!114 &971038831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1150,6 +1153,21 @@ MonoBehaviour:
   ballPrefab: {fileID: 5868382731849197724, guid: bcb3dfb4fac52b149bbcab192e79492b, type: 3}
   gameEnv: {fileID: 1456877066}
   wall: {fileID: 1718800593}
+--- !u!114 &971038839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 971038828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2204558dad06aee4e88b8098063a873d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEMGConnected: 0
+  isReading: 0
+  currentVal: 0
 --- !u!1 &1011620525
 GameObject:
   m_ObjectHideFlags: 0
