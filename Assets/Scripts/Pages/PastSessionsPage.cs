@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using MiniUI;
-using System.ComponentModel;
 
 public class PastSessionsPage : MiniPage {
     [SerializeField] StyleSheet styles;
@@ -36,6 +35,8 @@ public class PastSessionsPage : MiniPage {
 
     private void SetupEvents() {
         APIManager.Instance.OnGetSessionsSuccess += sessions => {
+            midSection.Clear();
+
             var headerRow = CreateElement<MiniElement>("header", "row");
             headerRow.CreateAndAddElement<Label>().text = "Session ID";
             headerRow.CreateAndAddElement<Label>().text = "Patient Name";

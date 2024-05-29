@@ -126,7 +126,7 @@ public class ReplayManager : MonoBehaviour {
         foreach (KeyValuePair<string, List<DataPoint>> kvp in gameData.data) {
 
             if (!trackedObjects.ContainsKey(kvp.Key)) {
-                print("Creating new " + kvp.Value[0].objectName);
+                //print("Creating new " + kvp.Value[0].objectName);
                 // Instantiate the object only if it's not already tracked
                 switch (kvp.Value[0].objectName) {
                     case "Left_Hand":

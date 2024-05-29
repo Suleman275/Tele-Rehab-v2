@@ -19,3 +19,18 @@
 	height: 80%;
 	width: 30%;
 }
+
+.appointment-card {
+	height: 80%;
+	width: 30%;
+	border-color: white;
+	border-radius: 12px;
+	border-width: 2px;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.appointment-card:hover {
+	border-color: black;
+	color: black;
+}

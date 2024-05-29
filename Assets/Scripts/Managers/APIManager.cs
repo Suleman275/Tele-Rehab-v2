@@ -102,17 +102,17 @@ public class APIManager : MonoBehaviour {
         }
     }
 
-    public void TryCreateAppointment(string name, string time) {
+    public void TryCreateAppointment(string name, DateTime time) {
         AppointmentDataModel data = new AppointmentDataModel {
             _id = Guid.NewGuid().ToString(),
             requestSender = UserDataManager.Instance.userEmail,
             requestSenderRole = UserDataManager.Instance.userRole,
             appointmentWith = name,
-            //time = time,
+            time = time,
             status = "Pending"
         };
 
-        string jsonData = JsonUtility.ToJson(data);
+        string jsonData = JsonConvert.SerializeObject(data);
         StartCoroutine(SendCreateAppointmentRequest(jsonData));
     }
 
@@ -197,6 +197,7 @@ public class APIManager : MonoBehaviour {
     }
 
     public void TryGetUpcomingAppointments(string participantName) {
+        //print("upcoming");
         StartCoroutine(SendGetUpcomingAppointmentsRequest(participantName));
     }
 
@@ -208,6 +209,7 @@ public class APIManager : MonoBehaviour {
 
             if (request.result == UnityWebRequest.Result.Success) {
                 string jsonResponse = request.downloadHandler.text;
+                
                 //Debug.Log("Appointments fetched successfully: " + jsonResponse);
 
                 if (jsonResponse == "No upcoming appointments") {

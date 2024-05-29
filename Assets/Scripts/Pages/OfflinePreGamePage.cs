@@ -48,5 +48,11 @@ public class OfflinePreGamePage : MiniPage {
 
             _router.Navigate(this, "OfflineGameUI");
         };
+
+        var backBtn = CreateAndAddElement<Button>();
+        backBtn.text = "Back";
+        backBtn.clicked += () => {
+            _router.Navigate(this, "PatientDashboard");
+        };
     }
 }

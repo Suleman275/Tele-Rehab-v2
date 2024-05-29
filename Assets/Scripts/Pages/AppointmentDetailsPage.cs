@@ -30,7 +30,14 @@ public class AppointmentDetailsPage : MiniPage {
         var midSection = container.CreateAndAddElement<MiniElement>("middle");
 
         midSection.CreateAndAddElement<Label>().text = "Date/Time: " + appointmentData.time;
-        midSection.CreateAndAddElement<Label>().text = "Patient Name: " + appointmentData.getPatientName();
+
+        if (UserDataManager.Instance.userRole == "Doctor") {
+            midSection.CreateAndAddElement<Label>().text = "Patient Name: " + appointmentData.getPatientName();
+        }
+        else {
+            midSection.CreateAndAddElement<Label>().text = "Doctor Name: " + appointmentData.getDoctorName();
+        }
+
         midSection.CreateAndAddElement<Label>().text = "Appointment Status: " + appointmentData.status;
 
         if (UserDataManager.Instance.userRole == "Doctor") {

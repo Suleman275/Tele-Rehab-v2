@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 public class PatientDashboard : MiniPage {
     [SerializeField] StyleSheet styles;
 
+    MiniElement upcomingSessionsContainer;
     protected override void RenderPage() {
         InheritStylesFromComponentRouter();
 
@@ -15,7 +16,7 @@ public class PatientDashboard : MiniPage {
         var topBar = CreateAndAddElement<MiniElement>("bar");
         topBar.CreateAndAddElement<Label>("").text = "Upcoming Sessions";
 
-        var upcomingSessionsContainer = CreateAndAddElement<MiniElement>("section");
+        upcomingSessionsContainer = CreateAndAddElement<MiniElement>("section");
 
         var middleBar = CreateAndAddElement<MiniElement>("bar");
         middleBar.CreateAndAddElement<Label>("").text = "Additional Actions";
@@ -30,7 +31,7 @@ public class PatientDashboard : MiniPage {
         scheduleAppointmentBtn.text = "Schedule An Appointment";
         scheduleAppointmentBtn.clicked += ScheduleAppointmentBtn_clicked;
 
-        //APIManager.Instance.TryGetUpcomingAppointments(UserDataManager.Instance.userEmail);
+        APIManager.Instance.TryGetUpcomingAppointments(UserDataManager.Instance.userEmail);
     }
 
     private void ScheduleAppointmentBtn_clicked() {
@@ -42,9 +43,31 @@ public class PatientDashboard : MiniPage {
     }
 
     private void SetupEvents() {
-        //APIManager.Instance.OnAllAppointmentsRecieved += (appointments) => {
-        //    print("All upcoming appointments recieved");
-        //    print(appointments.Count);
-        //};
+        APIManager.Instance.OnAllAppointmentsRecieved += (appointments) => {
+
+            print(appointments.Count);
+            upcomingSessionsContainer.Clear();
+
+            int count = appointments.Count > 3 ? 3 : appointments.Count; //showing only first 3
+
+            for (int i = 0; i < count; i++) { 
+                var appointment = appointments[i];
+
+                var appointmentcontainer = upcomingSessionsContainer.CreateAndAddElement<MiniElement>("appointment-card");
+                appointmentcontainer.CreateAndAddElement<Label>().text = appointments[i].time.ToString("dd-MM-yyy HH:mm");
+                appointmentcontainer.CreateAndAddElement<Label>().text = appointments[i].getDoctorName();
+                appointmentcontainer.CreateAndAddElement<Label>().text = appointments[i].status;
+
+                appointmentcontainer.RegisterCallback<ClickEvent>((e) => {
+                    _router.NavigateWithData(this, "AppointmentDetailsPage", appointment);
+                });
+
+            }
+        };
+
+        APIManager.Instance.OnGetAllAppointmentsError += (error) => {
+            upcomingSessionsContainer.Clear();
+            upcomingSessionsContainer.CreateAndAddElement<Label>().text = "You have no upcoming sessions!";
+        };
     }
 }

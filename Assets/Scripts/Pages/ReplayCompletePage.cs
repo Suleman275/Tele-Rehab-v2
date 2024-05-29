@@ -3,16 +3,21 @@ using UnityEngine.UIElements;
 using MiniUI;
 
 public class ReplayCompletePage : MiniPage {
+    [SerializeField] StyleSheet styles;
     protected override void RenderPage() {
         InheritStylesFromComponentRouter();
 
         SetupEvents();
 
-        var replayBtn = CreateAndAddElement<Button>("btn");
+        AddStyleSheet(styles);
+
+        var container = CreateAndAddElement<MiniElement>("Container");
+
+        var replayBtn = container.CreateAndAddElement<Button>("btn");
         replayBtn.text = "Play session recording again";
         replayBtn.clicked += ReplayBtn_clicked;
 
-        var exitBtn = CreateAndAddElement<Button>("btn");
+        var exitBtn = container.CreateAndAddElement<Button>("btn");
         exitBtn.text = "Exit to Dashboard";
         exitBtn.clicked += ExitBtn_clicked;
     }

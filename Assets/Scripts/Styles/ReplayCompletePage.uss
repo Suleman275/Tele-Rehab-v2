@@ -1,0 +1,14 @@
+:root {
+	align-items: center;
+	justify-content: center;
+}
+
+.container {
+	border-color: white;
+	border-radius: 12px;
+	border-width: 2px;
+	width: 80%;
+	height: 80%;
+	align-items: center;
+	justify-content: space-around;
+}

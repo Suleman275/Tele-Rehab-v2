@@ -24,17 +24,17 @@ public class ScheduleAppointmentPage : MiniPage {
         container.CreateAndAddElement<Label>().text = "Enter Time";
         var datePicker = container.CreateAndAddElement<MiniElement>();
 
-        var dateField = datePicker.CreateAndAddElement<DropdownField>("dateField");
-        dateField.value = "Date";
+        var dayField = datePicker.CreateAndAddElement<DropdownField>("dateField");
+        dayField.value = "Date";
         for (int i = 1; i <= 31; i++) {
             if (i < 10) {
-                dateField.choices.Add("0" + i.ToString());
+                dayField.choices.Add("0" + i.ToString());
             }
             else {
-                dateField.choices.Add(i.ToString());
+                dayField.choices.Add(i.ToString());
             }
         }
-        
+
         var monthField = datePicker.CreateAndAddElement<DropdownField>();
         monthField.value = "Month";
         for (int i = 1; i <= 12; i++) {
@@ -55,29 +55,48 @@ public class ScheduleAppointmentPage : MiniPage {
         var okayBtn = container.CreateAndAddElement<Button>("btn");
         okayBtn.text = "Create Appointment Request";
         okayBtn.clicked += () => {
-            print("clicked");
-            string formattedDateString = $"{dateField.value}/{monthField.value}/{yearField.value}";
+            errorText.text = "";
 
-            DateTime dateTime = DateTime.Parse(formattedDateString);
-            print(dateTime.ToString()); // Output: Friday, 2024-05-17 10:30:00 AM
-            
+            if (string.IsNullOrEmpty(nameTf.value)) {
+                errorText.text = "Kindly enter the name of the person you want to schedule an appointment with";
+                return;
+            }
+
+            string formattedDateString = $"{dayField.value}/{monthField.value}/{yearField.value} 07:30"; //setting time manually for now
+
+            DateTime dateTime;
+
+            try {
+                dateTime = DateTime.Parse(formattedDateString);
+            }
+            catch (FormatException ex) {
+                errorText.text = "Invalid date: " + ex.Message;
+                return;
+            }
+
+            if (dateTime < DateTime.Now) {
+                errorText.text = "Please select a date and time after the current date and time.";
+                return;
+            }
+
+            APIManager.Instance.TryCreateAppointment(nameTf.value, dateTime);
         };
 
-        //var btn = CreateAndAddElement<Button>("btn");
-        //btn.text = "Create Appointment Request";
-        //btn.clicked += () => {
-        //    errorText.text = "";
-        //    APIManager.Instance.TryCreateAppointment(nameTF.value, timeTF.value);
-        //};
+        var backBtn = CreateAndAddElement<Button>();
+        backBtn.text = "Back";
+        backBtn.clicked += () => {
+            _router.Navigate(this, UserDataManager.Instance.userRole == "Patient" ? "PatientDashboard" : "DoctorDashboard");
+        }; 
     }
 
     private void SetupEvents() {
         APIManager.Instance.AppointmentCreated += () => {
-            GetComponent<MiniComponentRouter>().Navigate(this, "PatientDashboard");
+            errorText.text = "Appointment Created Successfuly";
+            //GetComponent<MiniComponentRouter>().Navigate(this, "PatientDashboard");
         };
 
-        APIManager.Instance.AppointmentCreationError += error => { 
-            errorText.text = error; 
+        APIManager.Instance.AppointmentCreationError += error => {
+            errorText.text = error;
         };
-    } 
+    }
 }
