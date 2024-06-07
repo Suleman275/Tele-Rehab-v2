@@ -3,13 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Online_Player : NetworkBehaviour {
     [SerializeField] GameObject leftHand;
     [SerializeField] GameObject rightHand;
     [SerializeField] int sensitivity;
+    [SerializeField] GameObject jointPrefab;
 
     public static Online_Player LocalInstance;
+
+    private Dictionary<JointType, GameObject> jointsMap = new Dictionary<JointType, GameObject>();
 
     public string userRole;
 
@@ -45,6 +49,8 @@ public class Online_Player : NetworkBehaviour {
     }
 
     void Update() {
+        if (UserDataManager.Instance.userRole == "Doctor") return;
+
         var body = AstraManager.Instance.GetBody(0);
 
         if (body == null) {
@@ -69,6 +75,20 @@ public class Online_Player : NetworkBehaviour {
                 //if (body.HandPoseInfo.RightHand == Astra.HandPose.Grip) {
                 //    //print("right hand closed");
                 //}
+            }
+
+            if (jointsMap.ContainsKey(joint.Type)) {
+                jointsMap[joint.Type].transform.localPosition = new Vector3(joint.WorldPosition.X, joint.WorldPosition.Y, joint.WorldPosition.Z) / 200 * 2;
+            }
+            else {
+                var jointGO = Instantiate(jointPrefab);
+
+                var jointNO = jointGO.GetComponent<NetworkObject>();
+
+                jointNO.Spawn();
+                jointNO.TrySetParent(this.transform);
+
+                jointsMap.Add(joint.Type, jointGO);
             }
         }
     }
