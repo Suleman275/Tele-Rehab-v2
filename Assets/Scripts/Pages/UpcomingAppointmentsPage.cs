@@ -24,7 +24,7 @@ public class UpcomingAppointmentsPage : MiniPage {
 
         midSection = container.CreateAndAddElement<MiniElement>("middle");
 
-        APIManager.Instance.TryGetAllAppointmentsByParticipant(UserDataManager.Instance.userEmail);
+        APIManager.Instance.TryGetAllAppointmentsByParticipant(UserDataManager.Instance.username);
 
         var backBtn = CreateAndAddElement<Button>();
         backBtn.text = "Back";
@@ -45,7 +45,7 @@ public class UpcomingAppointmentsPage : MiniPage {
         midSection.Add(new AppointmentRow(null, null, true, null)); // creating column headers
 
         foreach (AppointmentDataModel appointment in appointments) {
-            AppointmentRow row = new AppointmentRow(appointment, UserDataManager.Instance.userEmail, false, () => {
+            AppointmentRow row = new AppointmentRow(appointment, UserDataManager.Instance.username, false, () => {
                 _router.NavigateWithData(this, "AppointmentDetailsPage", appointment);
             });
 

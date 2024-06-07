@@ -36,7 +36,7 @@ public class DoctorDashboard : MiniPage {
         pastSessionsBtn.text = "View Past Sessions";
         pastSessionsBtn.clicked += PastSessionsBtn_clicked;
 
-        APIManager.Instance.TryGetUpcomingAppointments(UserDataManager.Instance.userEmail);
+        APIManager.Instance.TryGetUpcomingAppointments(UserDataManager.Instance.username);
     }
 
     private void PastSessionsBtn_clicked() {

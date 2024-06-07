@@ -7,6 +7,7 @@ public class UserDataManager : MonoBehaviour {
     public string userEmail;
     public string userRole;
     public string userId;
+    public string username;
 
     private void Awake() {
         Instance = this;
@@ -22,6 +23,14 @@ public class UserDataManager : MonoBehaviour {
             userEmail = model.email;
             userRole = model.role;
             userId = model._id;
+            username = model.userName;
+        };
+
+        APIManager.Instance.UserRegistered += (model) => {
+            userEmail = model.email;
+            userRole = model.role;
+            userId = model._id;
+            username = model.userName;
         };
     }
 }

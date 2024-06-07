@@ -50,7 +50,7 @@ public class LoginPage : MiniPage {
         };
 
         var registerBtn = container.CreateAndAddElement<Button>("link");
-        registerBtn.text = "Already have an account? Login here";
+        registerBtn.text = "Don't have an account? Sign Up Here";
         registerBtn.clicked += () => {
             _router.Navigate(this, "RegisterPage");
         };

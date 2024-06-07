@@ -31,7 +31,7 @@ public class PatientDashboard : MiniPage {
         scheduleAppointmentBtn.text = "Schedule An Appointment";
         scheduleAppointmentBtn.clicked += ScheduleAppointmentBtn_clicked;
 
-        APIManager.Instance.TryGetUpcomingAppointments(UserDataManager.Instance.userEmail);
+        APIManager.Instance.TryGetUpcomingAppointments(UserDataManager.Instance.username);
     }
 
     private void ScheduleAppointmentBtn_clicked() {

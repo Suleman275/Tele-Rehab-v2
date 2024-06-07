@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Networking; // Import the necessary namespace
 
@@ -16,6 +17,9 @@ public class APIManager : MonoBehaviour {
     //Events
     public Action<UserDataModel> UserSignedIn;
     public Action<string> UserSignInFailed;
+    
+    public Action<UserDataModel> UserRegistered;
+    public Action<string> UserRegisterError;
 
     public Action AppointmentCreated;
     public Action<string> AppointmentCreationError;
@@ -39,9 +43,11 @@ public class APIManager : MonoBehaviour {
         Instance = this;
     }
 
-    public void TrySignUp(string email, string password, string role) {
+    public void TrySignUp(string email, string username, string password, string role) {
         var jsonBody = new UserDataModel();
+        jsonBody._id = Guid.NewGuid().ToString();
         jsonBody.email = email;
+        jsonBody.userName = username;
         jsonBody.password = password;
         jsonBody.role = role;
         
@@ -57,10 +63,21 @@ public class APIManager : MonoBehaviour {
             yield return request.SendWebRequest();
 
             if (request.result == UnityWebRequest.Result.Success) {
-                Debug.Log("User created successfully");
+                //Debug.Log("User created successfully");
+                if (request.downloadHandler.text == "Email already exists") {
+                    UserRegisterError?.Invoke("Email already in use");
+                }
+                else if (request.downloadHandler.text == "Username already exists") {
+                    UserRegisterError?.Invoke("Username already in use");
+                }
+                else {
+                    var user = JsonConvert.DeserializeObject<UserDataModel>(json);
+                    UserRegistered?.Invoke(user);
+                }
             }
             else {
-                Debug.LogError("Error creating user: " + request.error);
+                //Debug.LogError("Error creating user: " + request.error);
+                UserRegisterError?.Invoke(request.error);
             }
         }
     }
@@ -105,7 +122,7 @@ public class APIManager : MonoBehaviour {
     public void TryCreateAppointment(string name, DateTime time) {
         AppointmentDataModel data = new AppointmentDataModel {
             _id = Guid.NewGuid().ToString(),
-            requestSender = UserDataManager.Instance.userEmail,
+            requestSender = UserDataManager.Instance.username,
             requestSenderRole = UserDataManager.Instance.userRole,
             appointmentWith = name,
             time = time,

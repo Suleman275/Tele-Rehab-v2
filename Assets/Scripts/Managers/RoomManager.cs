@@ -69,7 +69,7 @@ public class RoomManager : MonoBehaviour {
 
         //'/rooms/:id-:userRole-:userName-:reqType'
 
-        string url = $"{baseUrl}/rooms/{roomId}-{userRole}-{UserDataManager.Instance.userEmail}-Join";
+        string url = $"{baseUrl}/rooms/{roomId}-{userRole}-{UserDataManager.Instance.username}-Join";
 
         using (UnityWebRequest request = UnityWebRequest.Post(url, "", "application/json")) {
             yield return request.SendWebRequest();
@@ -109,7 +109,7 @@ public class RoomManager : MonoBehaviour {
 
         //'/rooms/:id-:userRole-:userName-:reqType'
 
-        string url = $"{baseUrl}/rooms/{roomId}-{userRole}-{UserDataManager.Instance.userEmail}-Leave";
+        string url = $"{baseUrl}/rooms/{roomId}-{userRole}-{UserDataManager.Instance.username}-Leave";
 
         using (UnityWebRequest request = UnityWebRequest.Post(url, "", "application/json")) {
             yield return request.SendWebRequest();
