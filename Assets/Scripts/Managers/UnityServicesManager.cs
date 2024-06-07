@@ -30,6 +30,7 @@ public class UnityServicesManager : MonoBehaviour {
         APIManager.Instance.UserSignedIn += (model) => {
             if (model.role == "Patient") {
                 RoomManager.Instance.OnGameShouldStart += () => {
+                    print("starting game");
                     StartRelayHost();
                 };
             }
@@ -67,7 +68,7 @@ public class UnityServicesManager : MonoBehaviour {
             return;
         }
 
-        //print("starting host");
+        print("starting host");
 
         try {
             //print("creating allocation");

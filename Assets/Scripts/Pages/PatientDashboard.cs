@@ -45,7 +45,7 @@ public class PatientDashboard : MiniPage {
     private void SetupEvents() {
         APIManager.Instance.OnAllAppointmentsRecieved += (appointments) => {
 
-            print(appointments.Count);
+            //print(appointments.Count);
             upcomingSessionsContainer.Clear();
 
             int count = appointments.Count > 3 ? 3 : appointments.Count; //showing only first 3

@@ -19,6 +19,9 @@ public class Offline_Ball : MonoBehaviour {
             else if (other.gameObject.TryGetComponent<MiddleWall>(out MiddleWall wall) && holdingHand != null) { //if in hand and collides with wall
                 DropBall();
             }
+            else if (other.transform.tag == "Wall") {
+                DropBall();
+            }
         }
     }
 

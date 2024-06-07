@@ -10,7 +10,16 @@
 
 TextField {
 	width: 80%;
+	align-self: center;
 	color: black;
+}
+
+Label {
+	align-self: center;
+}
+
+ScrollView .unity-scroller__high-button, ScrollView .unity-scroller__low-button,  ScrollView .unity-scroller__slider {
+	display: none;	
 }
 
 .container {
@@ -26,4 +35,5 @@ TextField {
 
 .welcome {
 	font-size: 24px;
+	align-self: center;
 }

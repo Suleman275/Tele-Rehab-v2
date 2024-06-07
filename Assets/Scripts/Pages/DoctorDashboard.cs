@@ -62,7 +62,7 @@ public class DoctorDashboard : MiniPage {
 
                 var appointmentcontainer = upcomingSessionsContainer.CreateAndAddElement<MiniElement>("appointment-card");
                 appointmentcontainer.CreateAndAddElement<Label>().text = appointments[i].time.ToString("dd-MM-yyy HH:mm");
-                appointmentcontainer.CreateAndAddElement<Label>().text = appointments[i].getDoctorName();
+                appointmentcontainer.CreateAndAddElement<Label>().text = appointments[i].getPatientName();
                 appointmentcontainer.CreateAndAddElement<Label>().text = appointments[i].status;
 
                 appointmentcontainer.RegisterCallback<ClickEvent>((e) => {

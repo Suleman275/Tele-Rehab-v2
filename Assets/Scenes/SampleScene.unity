@@ -216,7 +216,7 @@ GameObject:
   - component: {fileID: 137022161}
   m_Layer: 0
   m_Name: Right_Wall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -385,6 +385,7 @@ GameObject:
   - component: {fileID: 398326560}
   - component: {fileID: 398326562}
   - component: {fileID: 398326561}
+  - component: {fileID: 398326563}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -658,6 +659,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showPreview: 0
+--- !u!114 &398326563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 398326543}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08f20c1cf2e267e4c8a1d254cd8f9ec7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showPreview: 0
+  styles: {fileID: 7433441132597879392, guid: 41ba0cfa364edda42949c54b7445ae58, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -910,7 +925,7 @@ GameObject:
   - component: {fileID: 891345128}
   m_Layer: 0
   m_Name: Left_Wall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1102,6 +1117,7 @@ MonoBehaviour:
   userEmail: 
   userRole: 
   userId: 
+  username: 
 --- !u!114 &971038836
 MonoBehaviour:
   m_ObjectHideFlags: 0
