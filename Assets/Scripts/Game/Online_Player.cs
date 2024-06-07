@@ -81,12 +81,14 @@ public class Online_Player : NetworkBehaviour {
                 jointsMap[joint.Type].transform.localPosition = new Vector3(joint.WorldPosition.X, joint.WorldPosition.Y, joint.WorldPosition.Z) / 200 * 2;
             }
             else {
-                var jointGO = Instantiate(jointPrefab);
+                var jointGO = Instantiate(jointPrefab); //Joint Game Object
 
-                var jointNO = jointGO.GetComponent<NetworkObject>();
+                var jointNO = jointGO.GetComponent<NetworkObject>(); //Joint Network Object
 
                 jointNO.Spawn();
                 jointNO.TrySetParent(this.transform);
+
+                jointGO.GetComponent<MeshRenderer>().enabled = false; //this should only run locally
 
                 jointsMap.Add(joint.Type, jointGO);
             }
