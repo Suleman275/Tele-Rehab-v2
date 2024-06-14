@@ -6,6 +6,7 @@
     "com.unity.netcode.gameobjects": "1.8.1",
     "com.unity.services.authentication": "3.3.1",
     "com.unity.services.relay": "1.0.5",
+    "com.unity.services.vivox": "16.3.0",
     "com.unity.test-framework": "1.1.33",
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.timeline": "1.7.6",

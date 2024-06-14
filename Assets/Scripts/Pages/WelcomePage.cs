@@ -24,7 +24,7 @@ public class WelcomePage : MiniPage {
 
 
         var text = rightPanel.CreateAndAddElement<Label>("text");
-        text.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pulvinar, nulla nec feugiat sollicitudin, augue leo finibus libero, eget tempus odio nulla sit amet ex. Sed egestas ex arcu, nec fringilla nulla eleifend id. Proin facilisis volutpat tortor non semper. In maximus odio risus, et congue felis rutrum sed. In hac habitasse platea dictumst. Sed eget interdum nisi. Mauris aliquam ante id consectetur accumsan. Morbi non fringilla libero, eget venenatis turpis. Nam egestas sapien rutrum, dignissim augue vitae, venenatis nisi. Nam sit amet neque orci. Vivamus sit amet nisi eros.";
+        text.text = "Revolutionize your rehabilitation journey! Our innovative tele-rehabilitation platform empowers you to connect with qualified therapists and engage in effective exercise programs from the comfort of your home. Experience the flexibility and convenience of virtual therapy sessions, while receiving personalized guidance and real-time feedback to achieve your wellness goals.";
 
         var btn = rightPanel.CreateAndAddElement<Button>("btn");
         btn.text = "Get Started";

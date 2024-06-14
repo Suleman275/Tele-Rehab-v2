@@ -15,8 +15,6 @@ public class Online_Player : NetworkBehaviour {
 
     private Dictionary<JointType, GameObject> jointsMap = new Dictionary<JointType, GameObject>();
 
-    public string userRole;
-
     public override void OnNetworkSpawn() {
         if (!IsOwner) {
             return;
@@ -88,7 +86,8 @@ public class Online_Player : NetworkBehaviour {
                 jointNO.Spawn();
                 jointNO.TrySetParent(this.transform);
 
-                jointGO.GetComponent<MeshRenderer>().enabled = false; //this should only run locally
+                //disabling for now
+                //jointGO.GetComponent<MeshRenderer>().enabled = false; //this should only run locally
 
                 jointsMap.Add(joint.Type, jointGO);
             }

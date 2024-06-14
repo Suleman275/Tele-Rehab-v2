@@ -74,7 +74,7 @@ public class ScheduleAppointmentPage : MiniPage {
                 return;
             }
 
-            if (dateTime < DateTime.Now) {
+            if (dateTime < DateTime.Today) {
                 errorText.text = "Please select a date and time after the current date and time.";
                 return;
             }

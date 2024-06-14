@@ -6,7 +6,7 @@ using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
-//using Unity.Services.Vivox;
+using Unity.Services.Vivox;
 using UnityEngine;
 
 public class UnityServicesManager : MonoBehaviour {
@@ -39,7 +39,15 @@ public class UnityServicesManager : MonoBehaviour {
                     StartRelayClient(joinCode);
                 };
             }
-        }; 
+        };
+
+        //RoomManager.Instance.OnRoomJoined += (room) => {
+        //    JoinAudioChannel(room._id);
+        //};
+
+        RoomManager.Instance.OnRoomLeft += () => { 
+            LeaveAllAudioChannels();
+        };
     }
 
     private async void InitServices() {
@@ -52,7 +60,7 @@ public class UnityServicesManager : MonoBehaviour {
         await UnityServices.InitializeAsync();
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
 
-        //await VivoxService.Instance.InitializeAsync();
+        await VivoxService.Instance.InitializeAsync();
     }
 
     private async void StartRelayHost() {
@@ -110,5 +118,13 @@ public class UnityServicesManager : MonoBehaviour {
         catch (RelayServiceException e) {
             onClientStartingError?.Invoke(e.Message);
         }
+    }
+
+    private async void JoinAudioChannel(string channelName) {
+        await VivoxService.Instance.JoinGroupChannelAsync(channelName, ChatCapability.AudioOnly);
+    }
+
+    private async void LeaveAllAudioChannels() {
+        await VivoxService.Instance.LeaveAllChannelsAsync();
     }
 }
