@@ -1009,6 +1009,7 @@ GameObject:
   - component: {fileID: 971038837}
   - component: {fileID: 971038838}
   - component: {fileID: 971038839}
+  - component: {fileID: 971038840}
   m_Layer: 0
   m_Name: Managers_Custom
   m_TagString: Untagged
@@ -1186,6 +1187,18 @@ MonoBehaviour:
   isEMGConnected: 0
   isReading: 0
   currentVal: 0
+--- !u!114 &971038840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 971038828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d44db13ea4002d2458b0544fbf33fb5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1011620525
 GameObject:
   m_ObjectHideFlags: 0

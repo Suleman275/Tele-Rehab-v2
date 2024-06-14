@@ -41,6 +41,7 @@ public class UnityServicesManager : MonoBehaviour {
             }
         };
 
+        //removed for local testing
         //RoomManager.Instance.OnRoomJoined += (room) => {
         //    JoinAudioChannel(room._id);
         //};

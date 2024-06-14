@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7260519201692929249}
   m_Layer: 0
   m_Name: Online_Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -104,6 +104,7 @@ MonoBehaviour:
   rightHand: {fileID: 8833288147139273220}
   sensitivity: 0
   jointPrefab: {fileID: 5434600867526671441, guid: 18b5e075e436a3249b3aca6c515a74ef, type: 3}
+  bonePrefab: {fileID: 6785007722277750624, guid: 3cf85b1c72e600b4fa309a542f145fa7, type: 3}
 --- !u!1 &3946358245045588055
 GameObject:
   m_ObjectHideFlags: 0
